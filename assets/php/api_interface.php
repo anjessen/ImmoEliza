@@ -24,6 +24,12 @@ class Request{
             throw $err;
         }   
     }
+    public function get3dObject(){
+        ;
+    }
+    public function getPrediction(){
+        ;
+    }
 }
 
 class Adress{
@@ -48,9 +54,9 @@ class Adress{
         ){
         try{
             $this->num = intval($num);
-            $this->road = strtolower($road);
+            $this->road = trim(strtolower($road));
             $this->pc = intval($pc);
-            $this->locality = strtolower($locality);
+            $this->locality = trim(strtolower($locality));
 
         }catch(Exception $err){
             throw $err;
@@ -109,8 +115,8 @@ class Property{
         $fullyEquipedKitchen = null
         ){
             try{
-                $type = ucfirst(strtolower($type));
-                $stateOfBuilding = strtolower($stateOfBuilding);
+                $type = trim(ucfirst(strtolower($type)));
+                $stateOfBuilding = trim(strtolower($stateOfBuilding));
 
                 $this->type = $this->type_of_property[array_search($type,$this->type_of_property)];
                 $this->number_of_rooms = intval($numberOfRooms);
