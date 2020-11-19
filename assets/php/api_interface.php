@@ -104,7 +104,7 @@ class Property{
         $landSurface = null,
         $numberOfFacades = null,
         $swimmingPool = null,
-        string $stateOfBuilding = null,
+        ?string $stateOfBuilding = null,
         $constructionYear = null,
         $fullyEquipedKitchen = null
         ){
@@ -132,9 +132,24 @@ class Property{
 }
 
 //Tests
-$prop = new Property("house", 6, "120.5");
-$adress = new Adress(10,'rue de louvain',1420,'Trou perdu');
-$req = new Request($adress,$prop);
+try{
+    $prop = new Property("house", 6, "120.5");
+}catch(Exception $err){
+    error_log($err, 0);
+}
+
+try{
+    $adress = new Adress(10,'rue de louvain',1420,'Trou perdu');
+}catch(Exception $err){
+    error_log($err, 0);
+}
+
+try{
+    $req = new Request($adress,$prop);
+}catch(Exception $err){
+    error_log($err, 0);
+}
+
 
 //Functions
 
