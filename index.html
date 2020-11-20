@@ -1,11 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ImmoEliza</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+        integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
+
 </head>
+
 <body>
-    
+    <div class="canvas">
+
+
+    </div>
+    <section class="form container">
+        <div class="row">
+            <div class="col-md-8">
+                <form action="./form.php" method="post">
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <label for="inputAddress">Address</label>
+                            <input type="text" class="form-control" id="inputAddress" placeholder="Rue Covid">
+                        </div>
+                        <div class="form-group  col-md-4">
+                            <label for="inputAddress2">Number</label>
+                            <input type="number" class="form-control" id="inputAddress2" placeholder="19">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="inputCity">Code postal</label>
+                            <input type="number" class="form-control" id="inputCity" placeholder="2020">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="inputCity">City</label>
+                            <input type="text" class="form-control" id="inputCity" placeholder="Corona">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="Type_of_property">Type de logement</label>
+                            <select id="Type_of_property" class="form-control">
+                                <option selected>Maison</option>
+                                <option>Appartement</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="State_of_building">State of building</label>
+                            <select id="State_of_building" class="form-control">
+                                <option selected> To be done up </option>
+                                <option> As new </option>
+                                <option> Good </option>
+                                <option> To restore </option>
+                                <option> Just renovated </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="Construction_year">Année de construction</label>
+                            <input type="numbers" class="form-control" id="Construction_year" placeholder="1930">
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="Number_of_rooms">Nombre de pièce</label>
+                            <input type="number" class="form-control" id="Number_of_rooms" placeholder="159"
+                                name="rooms">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="Number_of_facades">Number_of_facades</label>
+                            <input type="number" class="form-control" id="Number_of_facades" placeholder="2">
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="House_area">Surface Habitable (m²)</label>
+                            <input type="text" class="form-control" id="House_area" placeholder="15 025">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="Surface_of_the_land">Surface du terrain (m²)</label>
+                            <input type="number" class="form-control" id="Surface_of_the_land" placeholder="24 917">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <fieldset class="form-group col-md-6">
+                            <div class="row">
+                                <legend class="col-form-label col-md-4 pt-0">Jardin ?</legend>
+                                <div class="col-md-8">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="Garden" id="Garden1"
+                                            value="yes">
+                                        <label class="form-check-label" for="Garden1">
+                                            Oui
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="Garden" id="Garden2"
+                                            value="no">
+                                        <label class="form-check-label" for="Garden2">
+                                            Non
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group col-md-6">
+                            <div class="row">
+                                <legend class="col-form-label col-md-4 pt-0">Terrasse ?</legend>
+                                <div class="col-md-8">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="Terrace" id="Terrace1"
+                                            value="yes">
+                                        <label class="form-check-label" for="Terrace1">
+                                            Oui
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="Terrace" id="Terrace2"
+                                            value="no">
+                                        <label class="form-check-label" for="Terrace2">
+                                            Non
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 display">
+                            <label for="Surface_of_the_land">Surface du jardin (m²)</label>
+                            <input type="number" class="form-control" id="Surface_of_the_garden" placeholder="23 920">
+                        </div>
+                        <div class="form-group col-md-6 display">
+                            <label for="Surface_of_the_land">Surface du terrasse (m²)</label>
+                            <input type="number" class="form-control" id="Surface_of_the_terrace" placeholder="24 917">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <fieldset class="form-group col-md-6">
+                            <div class="row">
+                                <legend class="col-form-label col-md-4 pt-0">Open fire ?</legend>
+                                <div class="col-md-8">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="Open_fire" id="Open_fire1"
+                                            value="yes">
+                                        <label class="form-check-label" for="Open_fire1">
+                                            Oui
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="Open_fire" id="Open_fire2"
+                                            value="no">
+                                        <label class="form-check-label" for="Open_fire2">
+                                            Non
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group col-md-6">
+                            <div class="row">
+                                <legend class="col-form-label col-md-4 pt-0">Piscine ?</legend>
+                                <div class="col-md-8">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="Swimming_pool"
+                                            id="Swimming_pool1" value="yes">
+                                        <label class="form-check-label" for="Swimming_pool1">
+                                            Oui
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="Swimming_pool"
+                                            id="Swimming_pool2" value="no">
+                                        <label class="form-check-label" for="Swimming_pool2">
+                                            Non
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="form-row">
+                        <fieldset class="form-group col-md-6">
+                            <div class="row">
+                                <legend class="col-form-label col-md-4 pt-0">Cuisine equipé ?</legend>
+                                <div class="col-md-8">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="Fully_equipped_kitchen"
+                                            id="Fully_equipped_kitchen1" value="yes">
+                                        <label class="form-check-label" for="Fully_equipped_kitchen1">
+                                            Oui
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="Fully_equipped_kitchen"
+                                            id="Fully_equipped_kitchen2" value="no">
+                                        <label class="form-check-label" for="Fully_equipped_kitchen2">
+                                            Non
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <button type="submit" class="button">Estimer</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
 </body>
+
 </html>

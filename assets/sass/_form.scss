@@ -1,0 +1,17 @@
+.form{
+        .button{
+        background: $quatriary;
+        color: white;
+        border: $quatriary;
+        border-radius: 5%;
+        padding: 0.5rem;
+        transition: 1s;
+    }
+    .button:hover{
+        background: $terciary;
+        transition: 1s;
+    }
+    .display{
+        display: none;
+    }
+}
