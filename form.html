@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="./form.php" method="post">
+        <p>
+            Adresse* : 
+            <input type="text" name="adresse" />
+        </p>
+        <p>
+            Type of property*:
+            <input type="radio" id="house" name="property" value="house">
+            <label for="house">House</label><br>
+            <input type="radio" id="appartement" name="property" value="appartement" checked="checked">
+            <label for="appartement">Appartement</label><br>
+        </p>
+        <p>
+            Number_of_rooms*:
+            <input type="text" name="rooms"/>
+            </p>
+        <p>
+            Garden:
+            <input type="radio" id="yes" name="garden" value="yes">
+            <label for="yes">Yes</label><br>
+            <input type="radio" id="no" name="garden" value="no" checked="checked">
+            <label for="no">No</label><br>
+        </p>
+        <p>
+            Garden area:
+            <input type="text" name="garden-area"/>
+        </p>
+        <p>
+            Open fire:
+            <input type="radio" id="yes" name="open-fire" value="yes">
+            <label for="yes">Yes</label><br>
+            <input type="radio" id="no" name="open-fire" value="no" checked="checked">
+            <label for="no">No</label><br>
+        </p>
+        <p>
+            Terrace:
+            <input type="radio" id="oui" name="terrace" value="yes">
+            <label for="oui">Yes</label><br>
+            <input type="radio" id="non" name="terrace" value="no" checked="checked">
+            <label for="non">No</label><br>
+        </p>
+            Terrace area:
+            <input type="text" name="terrace-area"/>
+        </p>
+        <p>
+            surface of the land:
+            <input type="text" name="surface"/>
+        </p>
+        <p>
+            Number of facades:
+            <input type="text" name="facades"/>
+        </p>
+        <p>
+            Swimming pool:
+            <input type="radio" class="oui" name="swimming-pool" value="yes">
+            <label for="yes">Yes</label><br>
+            <input type="radio" class="non" name="swimming-pool" value="no" checked="checked">
+            <label for="no">No</label><br>
+        </p>
+            State of building:
+            <div class="form-group col-md-4">
+                <label for="State_of_building">State of building</label>
+                <select id="State_of_building" class="form-control" name="state">
+                    <option selected value = "to be done up"> To be done up </option>
+                    <option value= "as new"> As new </option>
+                    <option value="good"> Good </option>
+                    <option value ="to restore"> To restore </option>
+                    <option value ="just renovated"> Just renovated </option>
+                </select>
+            </div>
+        <p>
+            Construction year:
+            <input type="text" name="construction_year"/>
+        </p>
+        <p>
+            Fully equiped kitchen:
+            <input type="radio" class="oui" name="equiped-kitchen" value="yes">
+            <label for="yes">Yes</label><br>
+            <input type="radio" class="non" name="equiped-kitchen" value="no" checked="checked">
+            <label for="no">No</label><br>
+        </p>
+        <p>
+            <input type="submit" value="OK">
+        </p>
+       </form>
+</body>
+</html>
