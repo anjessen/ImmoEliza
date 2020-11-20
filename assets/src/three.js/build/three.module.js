@@ -1,5 +1,5 @@
 // threejs.org/license
-const REVISION = '123dev';
+const REVISION = '122';
 const MOUSE = { LEFT: 0, MIDDLE: 1, RIGHT: 2, ROTATE: 0, DOLLY: 1, PAN: 2 };
 const TOUCH = { ROTATE: 0, PAN: 1, DOLLY_PAN: 2, DOLLY_ROTATE: 3 };
 const CullFaceNone = 0;
@@ -1134,13 +1134,20 @@ class Matrix3 {
 
 	}
 
-	invert() {
+	getInverse( matrix, throwOnDegenerate ) {
 
-		const te = this.elements,
+		if ( throwOnDegenerate !== undefined ) {
 
-			n11 = te[ 0 ], n21 = te[ 1 ], n31 = te[ 2 ],
-			n12 = te[ 3 ], n22 = te[ 4 ], n32 = te[ 5 ],
-			n13 = te[ 6 ], n23 = te[ 7 ], n33 = te[ 8 ],
+			console.warn( "THREE.Matrix3: .getInverse() can no longer be configured to throw on degenerate." );
+
+		}
+
+		const me = matrix.elements,
+			te = this.elements,
+
+			n11 = me[ 0 ], n21 = me[ 1 ], n31 = me[ 2 ],
+			n12 = me[ 3 ], n22 = me[ 4 ], n32 = me[ 5 ],
+			n13 = me[ 6 ], n23 = me[ 7 ], n33 = me[ 8 ],
 
 			t11 = n33 * n22 - n32 * n23,
 			t12 = n32 * n13 - n33 * n12,
@@ -1183,7 +1190,7 @@ class Matrix3 {
 
 	getNormalMatrix( matrix4 ) {
 
-		return this.setFromMatrix4( matrix4 ).copy( this ).invert().transpose();
+		return this.setFromMatrix4( matrix4 ).getInverse( this ).transpose();
 
 	}
 
@@ -2850,7 +2857,7 @@ class Quaternion {
 
 	}
 
-	invert() {
+	inverse() {
 
 		// quaternion is assumed to have unit length
 
@@ -5516,15 +5523,22 @@ class Matrix4 {
 
 	}
 
-	invert() {
+	getInverse( m, throwOnDegenerate ) {
+
+		if ( throwOnDegenerate !== undefined ) {
+
+			console.warn( "THREE.Matrix4: .getInverse() can no longer be configured to throw on degenerate." );
+
+		}
 
 		// based on http://www.euclideanspace.com/maths/algebra/matrix/functions/inverse/fourD/index.htm
 		const te = this.elements,
+			me = m.elements,
 
-			n11 = te[ 0 ], n21 = te[ 1 ], n31 = te[ 2 ], n41 = te[ 3 ],
-			n12 = te[ 4 ], n22 = te[ 5 ], n32 = te[ 6 ], n42 = te[ 7 ],
-			n13 = te[ 8 ], n23 = te[ 9 ], n33 = te[ 10 ], n43 = te[ 11 ],
-			n14 = te[ 12 ], n24 = te[ 13 ], n34 = te[ 14 ], n44 = te[ 15 ],
+			n11 = me[ 0 ], n21 = me[ 1 ], n31 = me[ 2 ], n41 = me[ 3 ],
+			n12 = me[ 4 ], n22 = me[ 5 ], n32 = me[ 6 ], n42 = me[ 7 ],
+			n13 = me[ 8 ], n23 = me[ 9 ], n33 = me[ 10 ], n43 = me[ 11 ],
+			n14 = me[ 12 ], n24 = me[ 13 ], n34 = me[ 14 ], n44 = me[ 15 ],
 
 			t11 = n23 * n34 * n42 - n24 * n33 * n42 + n24 * n32 * n43 - n22 * n34 * n43 - n23 * n32 * n44 + n22 * n33 * n44,
 			t12 = n14 * n33 * n42 - n13 * n34 * n42 - n14 * n32 * n43 + n12 * n34 * n43 + n13 * n32 * n44 - n12 * n33 * n44,
@@ -6514,7 +6528,7 @@ Object3D.prototype = Object.assign( Object.create( EventDispatcher.prototype ), 
 
 	worldToLocal: function ( vector ) {
 
-		return vector.applyMatrix4( _m1$1.copy( this.matrixWorld ).invert() );
+		return vector.applyMatrix4( _m1$1.getInverse( this.matrixWorld ) );
 
 	},
 
@@ -6554,7 +6568,7 @@ Object3D.prototype = Object.assign( Object.create( EventDispatcher.prototype ), 
 
 			_m1$1.extractRotation( parent.matrixWorld );
 			_q1.setFromRotationMatrix( _m1$1 );
-			this.quaternion.premultiply( _q1.invert() );
+			this.quaternion.premultiply( _q1.inverse() );
 
 		}
 
@@ -6658,7 +6672,7 @@ Object3D.prototype = Object.assign( Object.create( EventDispatcher.prototype ), 
 
 		this.updateWorldMatrix( true, false );
 
-		_m1$1.copy( this.matrixWorld ).invert();
+		_m1$1.getInverse( this.matrixWorld );
 
 		if ( object.parent !== null ) {
 
@@ -6921,8 +6935,7 @@ Object3D.prototype = Object.assign( Object.create( EventDispatcher.prototype ), 
 				materials: {},
 				textures: {},
 				images: {},
-				shapes: {},
-				skeletons: {}
+				shapes: {}
 			};
 
 			output.metadata = {
@@ -7007,21 +7020,6 @@ Object3D.prototype = Object.assign( Object.create( EventDispatcher.prototype ), 
 
 		}
 
-		if ( this.isSkinnedMesh ) {
-
-			object.bindMode = this.bindMode;
-			object.bindMatrix = this.bindMatrix.toArray();
-
-			if ( this.skeleton !== undefined ) {
-
-				serialize( meta.skeletons, this.skeleton );
-
-				object.skeleton = this.skeleton.uuid;
-
-			}
-
-		}
-
 		if ( this.material !== undefined ) {
 
 			if ( Array.isArray( this.material ) ) {
@@ -7065,14 +7063,12 @@ Object3D.prototype = Object.assign( Object.create( EventDispatcher.prototype ), 
 			const textures = extractFromCache( meta.textures );
 			const images = extractFromCache( meta.images );
 			const shapes = extractFromCache( meta.shapes );
-			const skeletons = extractFromCache( meta.skeletons );
 
 			if ( geometries.length > 0 ) output.geometries = geometries;
 			if ( materials.length > 0 ) output.materials = materials;
 			if ( textures.length > 0 ) output.textures = textures;
 			if ( images.length > 0 ) output.images = images;
 			if ( shapes.length > 0 ) output.shapes = shapes;
-			if ( skeletons.length > 0 ) output.skeletons = skeletons;
 
 		}
 
@@ -7106,7 +7102,9 @@ Object3D.prototype = Object.assign( Object.create( EventDispatcher.prototype ), 
 
 	},
 
-	copy: function ( source, recursive = true ) {
+	copy: function ( source, recursive ) {
+
+		if ( recursive === undefined ) recursive = true;
 
 		this.name = source.name;
 
@@ -7994,7 +7992,9 @@ class Color {
 
 	}
 
-	copyGammaToLinear( color, gammaFactor = 2.0 ) {
+	copyGammaToLinear( color, gammaFactor ) {
+
+		if ( gammaFactor === undefined ) gammaFactor = 2.0;
 
 		this.r = Math.pow( color.r, gammaFactor );
 		this.g = Math.pow( color.g, gammaFactor );
@@ -8004,7 +8004,9 @@ class Color {
 
 	}
 
-	copyLinearToGamma( color, gammaFactor = 2.0 ) {
+	copyLinearToGamma( color, gammaFactor ) {
+
+		if ( gammaFactor === undefined ) gammaFactor = 2.0;
 
 		const safeInverse = ( gammaFactor > 0 ) ? ( 1.0 / gammaFactor ) : 1.0;
 
@@ -9172,7 +9174,9 @@ Object.assign( BufferAttribute.prototype, {
 
 	},
 
-	set: function ( value, offset = 0 ) {
+	set: function ( value, offset ) {
+
+		if ( offset === undefined ) offset = 0;
 
 		this.array.set( value, offset );
 
@@ -9370,15 +9374,6 @@ function Uint32BufferAttribute( array, itemSize, normalized ) {
 Uint32BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
 Uint32BufferAttribute.prototype.constructor = Uint32BufferAttribute;
 
-function Float16BufferAttribute( array, itemSize, normalized ) {
-
-	BufferAttribute.call( this, new Uint16Array( array ), itemSize, normalized );
-
-}
-
-Float16BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
-Float16BufferAttribute.prototype.constructor = Float16BufferAttribute;
-Float16BufferAttribute.prototype.isFloat16BufferAttribute = true;
 
 function Float32BufferAttribute( array, itemSize, normalized ) {
 
@@ -11057,7 +11052,7 @@ Mesh.prototype = Object.assign( Object.create( Object3D.prototype ), {
 
 		//
 
-		_inverseMatrix.copy( matrixWorld ).invert();
+		_inverseMatrix.getInverse( matrixWorld );
 		_ray.copy( raycaster.ray ).applyMatrix4( _inverseMatrix );
 
 		// Check boundingBox before continuing
@@ -11857,7 +11852,7 @@ Camera.prototype = Object.assign( Object.create( Object3D.prototype ), {
 
 		Object3D.prototype.updateMatrixWorld.call( this, force );
 
-		this.matrixWorldInverse.copy( this.matrixWorld ).invert();
+		this.matrixWorldInverse.getInverse( this.matrixWorld );
 
 	},
 
@@ -11865,7 +11860,7 @@ Camera.prototype = Object.assign( Object.create( Object3D.prototype ), {
 
 		Object3D.prototype.updateWorldMatrix.call( this, updateParents, updateChildren );
 
-		this.matrixWorldInverse.copy( this.matrixWorld ).invert();
+		this.matrixWorldInverse.getInverse( this.matrixWorld );
 
 	},
 
@@ -12080,7 +12075,7 @@ PerspectiveCamera.prototype = Object.assign( Object.create( Camera.prototype ), 
 
 		this.projectionMatrix.makePerspective( left, left + width, top, top - height, near, this.far );
 
-		this.projectionMatrixInverse.copy( this.projectionMatrix ).invert();
+		this.projectionMatrixInverse.getInverse( this.projectionMatrix );
 
 	},
 
@@ -12651,23 +12646,7 @@ function WebGLAttributes( gl, capabilities ) {
 
 		} else if ( array instanceof Uint16Array ) {
 
-			if ( attribute.isFloat16BufferAttribute ) {
-
-				if ( isWebGL2 ) {
-
-					type = 5131;
-
-				} else {
-
-					console.warn( 'THREE.WebGLAttributes: Usage of Float16BufferAttribute requires WebGL2.' );
-
-				}
-
-			} else {
-
-				type = 5123;
-
-			}
+			type = 5123;
 
 		} else if ( array instanceof Int16Array ) {
 
@@ -12763,7 +12742,7 @@ function WebGLAttributes( gl, capabilities ) {
 
 		if ( attribute.isGLBufferAttribute ) {
 
-			const cached = buffers.get( attribute );
+			var cached = buffers.get( attribute );
 
 			if ( ! cached || cached.version < attribute.version ) {
 
@@ -14189,7 +14168,7 @@ function WebGLBindingStates( gl, extensions, attributes, capabilities ) {
 		const cachedAttributes = currentState.attributes;
 		const geometryAttributes = geometry.attributes;
 
-		let attributesNum = 0;
+		if ( Object.keys( cachedAttributes ).length !== Object.keys( geometryAttributes ).length ) return true;
 
 		for ( const key in geometryAttributes ) {
 
@@ -14202,11 +14181,7 @@ function WebGLBindingStates( gl, extensions, attributes, capabilities ) {
 
 			if ( cachedAttribute.data !== geometryAttribute.data ) return true;
 
-			attributesNum ++;
-
 		}
-
-		if ( currentState.attributesNum !== attributesNum ) return true;
 
 		if ( currentState.index !== index ) return true;
 
@@ -14218,7 +14193,6 @@ function WebGLBindingStates( gl, extensions, attributes, capabilities ) {
 
 		const cache = {};
 		const attributes = geometry.attributes;
-		let attributesNum = 0;
 
 		for ( const key in attributes ) {
 
@@ -14235,12 +14209,9 @@ function WebGLBindingStates( gl, extensions, attributes, capabilities ) {
 
 			cache[ key ] = data;
 
-			attributesNum ++;
-
 		}
 
 		currentState.attributes = cache;
-		currentState.attributesNum = attributesNum;
 
 		currentState.index = index;
 
@@ -22266,7 +22237,7 @@ function WebXRManager( renderer, gl ) {
 		camera.translateX( xOffset );
 		camera.translateZ( zOffset );
 		camera.matrixWorld.compose( camera.position, camera.quaternion, camera.scale );
-		camera.matrixWorldInverse.copy( camera.matrixWorld ).invert();
+		camera.matrixWorldInverse.getInverse( camera.matrixWorld );
 
 		// Find the union of the frustum values of the cameras and scale
 		// the values so that the near plane's position does not change in world space,
@@ -22294,7 +22265,7 @@ function WebXRManager( renderer, gl ) {
 
 		}
 
-		camera.matrixWorldInverse.copy( camera.matrixWorld ).invert();
+		camera.matrixWorldInverse.getInverse( camera.matrixWorld );
 
 	}
 
@@ -23137,19 +23108,11 @@ function WebGLMaterials( properties ) {
 
 }
 
-function createCanvasElement() {
-
-	const canvas = document.createElementNS( 'http://www.w3.org/1999/xhtml', 'canvas' );
-	canvas.style.display = 'block';
-	return canvas;
-
-}
-
 function WebGLRenderer( parameters ) {
 
 	parameters = parameters || {};
 
-	const _canvas = parameters.canvas !== undefined ? parameters.canvas : createCanvasElement(),
+	const _canvas = parameters.canvas !== undefined ? parameters.canvas : document.createElementNS( 'http://www.w3.org/1999/xhtml', 'canvas' ),
 		_context = parameters.context !== undefined ? parameters.context : null,
 
 		_alpha = parameters.alpha !== undefined ? parameters.alpha : false,
@@ -24695,7 +24658,7 @@ function WebGLRenderer( parameters ) {
 
 				if ( capabilities.floatVertexTextures ) {
 
-					if ( skeleton.boneTexture === null ) {
+					if ( skeleton.boneTexture === undefined ) {
 
 						// layout (1 matrix = 4 pixels)
 						//      RGBA RGBA RGBA RGBA (=> column1, column2, column3, column4)
@@ -25020,7 +24983,9 @@ function WebGLRenderer( parameters ) {
 
 	};
 
-	this.copyFramebufferToTexture = function ( position, texture, level = 0 ) {
+	this.copyFramebufferToTexture = function ( position, texture, level ) {
+
+		if ( level === undefined ) level = 0;
 
 		const levelScale = Math.pow( 2, - level );
 		const width = Math.floor( texture.image.width * levelScale );
@@ -25035,7 +25000,9 @@ function WebGLRenderer( parameters ) {
 
 	};
 
-	this.copyTextureToTexture = function ( position, srcTexture, dstTexture, level = 0 ) {
+	this.copyTextureToTexture = function ( position, srcTexture, dstTexture, level ) {
+
+		if ( level === undefined ) level = 0;
 
 		const width = srcTexture.image.width;
 		const height = srcTexture.image.height;
@@ -25292,7 +25259,9 @@ Object.assign( InterleavedBuffer.prototype, {
 
 	},
 
-	set: function ( value, offset = 0 ) {
+	set: function ( value, offset ) {
+
+		if ( offset === undefined ) offset = 0;
 
 		this.array.set( value, offset );
 
@@ -25909,7 +25878,9 @@ LOD.prototype = Object.assign( Object.create( Object3D.prototype ), {
 
 	},
 
-	addLevel: function ( object, distance = 0 ) {
+	addLevel: function ( object, distance ) {
+
+		if ( distance === undefined ) distance = 0;
 
 		distance = Math.abs( distance );
 
@@ -26105,7 +26076,7 @@ SkinnedMesh.prototype = Object.assign( Object.create( Mesh.prototype ), {
 		}
 
 		this.bindMatrix.copy( bindMatrix );
-		this.bindMatrixInverse.copy( bindMatrix ).invert();
+		this.bindMatrixInverse.getInverse( bindMatrix );
 
 	},
 
@@ -26152,11 +26123,11 @@ SkinnedMesh.prototype = Object.assign( Object.create( Mesh.prototype ), {
 
 		if ( this.bindMode === 'attached' ) {
 
-			this.bindMatrixInverse.copy( this.matrixWorld ).invert();
+			this.bindMatrixInverse.getInverse( this.matrixWorld );
 
 		} else if ( this.bindMode === 'detached' ) {
 
-			this.bindMatrixInverse.copy( this.bindMatrix ).invert();
+			this.bindMatrixInverse.getInverse( this.bindMatrix );
 
 		} else {
 
@@ -26212,82 +26183,55 @@ SkinnedMesh.prototype = Object.assign( Object.create( Mesh.prototype ), {
 
 } );
 
-function Bone() {
-
-	Object3D.call( this );
-
-	this.type = 'Bone';
-
-}
-
-Bone.prototype = Object.assign( Object.create( Object3D.prototype ), {
-
-	constructor: Bone,
-
-	isBone: true
-
-} );
-
 const _offsetMatrix = new Matrix4();
 const _identityMatrix = new Matrix4();
 
-function Skeleton( bones = [], boneInverses = [] ) {
+function Skeleton( bones, boneInverses ) {
 
-	this.uuid = MathUtils.generateUUID();
+	// copy the bone array
+
+	bones = bones || [];
 
 	this.bones = bones.slice( 0 );
-	this.boneInverses = boneInverses;
-	this.boneMatrices = null;
-
-	this.boneTexture = null;
-	this.boneTextureSize = 0;
+	this.boneMatrices = new Float32Array( this.bones.length * 16 );
 
 	this.frame = - 1;
 
-	this.init();
+	// use the supplied bone inverses or calculate the inverses
 
-}
+	if ( boneInverses === undefined ) {
 
-Object.assign( Skeleton.prototype, {
+		this.calculateInverses();
 
-	init: function () {
+	} else {
 
-		const bones = this.bones;
-		const boneInverses = this.boneInverses;
+		if ( this.bones.length === boneInverses.length ) {
 
-		this.boneMatrices = new Float32Array( bones.length * 16 );
-
-		// calculate inverse bone matrices if necessary
-
-		if ( boneInverses.length === 0 ) {
-
-			this.calculateInverses();
+			this.boneInverses = boneInverses.slice( 0 );
 
 		} else {
 
-			// handle special case
+			console.warn( 'THREE.Skeleton boneInverses is the wrong length.' );
 
-			if ( bones.length !== boneInverses.length ) {
+			this.boneInverses = [];
 
-				console.warn( 'THREE.Skeleton: Number of inverse bone matrices does not match amount of bones.' );
+			for ( let i = 0, il = this.bones.length; i < il; i ++ ) {
 
-				this.boneInverses = [];
-
-				for ( let i = 0, il = this.bones.length; i < il; i ++ ) {
-
-					this.boneInverses.push( new Matrix4() );
-
-				}
+				this.boneInverses.push( new Matrix4() );
 
 			}
 
 		}
 
-	},
+	}
+
+}
+
+Object.assign( Skeleton.prototype, {
 
 	calculateInverses: function () {
 
-		this.boneInverses.length = 0;
+		this.boneInverses = [];
 
 		for ( let i = 0, il = this.bones.length; i < il; i ++ ) {
 
@@ -26295,7 +26239,7 @@ Object.assign( Skeleton.prototype, {
 
 			if ( this.bones[ i ] ) {
 
-				inverse.copy( this.bones[ i ].matrixWorld ).invert();
+				inverse.getInverse( this.bones[ i ].matrixWorld );
 
 			}
 
@@ -26315,7 +26259,7 @@ Object.assign( Skeleton.prototype, {
 
 			if ( bone ) {
 
-				bone.matrixWorld.copy( this.boneInverses[ i ] ).invert();
+				bone.matrixWorld.getInverse( this.boneInverses[ i ] );
 
 			}
 
@@ -26331,7 +26275,7 @@ Object.assign( Skeleton.prototype, {
 
 				if ( bone.parent && bone.parent.isBone ) {
 
-					bone.matrix.copy( bone.parent.matrixWorld ).invert();
+					bone.matrix.getInverse( bone.parent.matrixWorld );
 					bone.matrix.multiply( bone.matrixWorld );
 
 				} else {
@@ -26368,7 +26312,7 @@ Object.assign( Skeleton.prototype, {
 
 		}
 
-		if ( boneTexture !== null ) {
+		if ( boneTexture !== undefined ) {
 
 			boneTexture.needsUpdate = true;
 
@@ -26402,73 +26346,31 @@ Object.assign( Skeleton.prototype, {
 
 	dispose: function ( ) {
 
-		if ( this.boneTexture !== null ) {
+		if ( this.boneTexture ) {
 
 			this.boneTexture.dispose();
 
-			this.boneTexture = null;
+			this.boneTexture = undefined;
 
 		}
-
-	},
-
-	fromJSON: function ( json, bones ) {
-
-		this.uuid = json.uuid;
-
-		for ( let i = 0, l = json.bones.length; i < l; i ++ ) {
-
-			const uuid = json.bones[ i ];
-			let bone = bones[ uuid ];
-
-			if ( bone === undefined ) {
-
-				console.warn( 'THREE.Skeleton: No bone found with UUID:', uuid );
-				bone = new Bone();
-
-			}
-
-			this.bones.push( bone );
-			this.boneInverses.push( new Matrix4().fromArray( json.boneInverses[ i ] ) );
-
-		}
-
-		this.init();
-
-		return this;
-
-	},
-
-	toJSON: function () {
-
-		const data = {
-			metadata: {
-				version: 4.5,
-				type: 'Skeleton',
-				generator: 'Skeleton.toJSON'
-			},
-			bones: [],
-			boneInverses: []
-		};
-
-		data.uuid = this.uuid;
-
-		const bones = this.bones;
-		const boneInverses = this.boneInverses;
-
-		for ( let i = 0, l = bones.length; i < l; i ++ ) {
-
-			const bone = bones[ i ];
-			data.bones.push( bone.uuid );
-
-			const boneInverse = boneInverses[ i ];
-			data.boneInverses.push( boneInverse.toArray() );
-
-		}
-
-		return data;
 
 	}
+
+} );
+
+function Bone() {
+
+	Object3D.call( this );
+
+	this.type = 'Bone';
+
+}
+
+Bone.prototype = Object.assign( Object.create( Object3D.prototype ), {
+
+	constructor: Bone,
+
+	isBone: true
 
 } );
 
@@ -26509,9 +26411,15 @@ InstancedMesh.prototype = Object.assign( Object.create( Mesh.prototype ), {
 
 	},
 
-	getColorAt: function ( index, color ) {
+	setColorAt: function ( index, color ) {
 
-		color.fromArray( this.instanceColor.array, index * 3 );
+		if ( this.instanceColor === null ) {
+
+			this.instanceColor = new BufferAttribute( new Float32Array( this.count * 3 ), 3 );
+
+		}
+
+		color.toArray( this.instanceColor.array, index * 3 );
 
 	},
 
@@ -26559,18 +26467,6 @@ InstancedMesh.prototype = Object.assign( Object.create( Mesh.prototype ), {
 			_instanceIntersects.length = 0;
 
 		}
-
-	},
-
-	setColorAt: function ( index, color ) {
-
-		if ( this.instanceColor === null ) {
-
-			this.instanceColor = new BufferAttribute( new Float32Array( this.count * 3 ), 3 );
-
-		}
-
-		color.toArray( this.instanceColor.array, index * 3 );
 
 	},
 
@@ -26747,7 +26643,7 @@ Line.prototype = Object.assign( Object.create( Object3D.prototype ), {
 
 		//
 
-		_inverseMatrix$1.copy( matrixWorld ).invert();
+		_inverseMatrix$1.getInverse( matrixWorld );
 		_ray$1.copy( raycaster.ray ).applyMatrix4( _inverseMatrix$1 );
 
 		const localThreshold = threshold / ( ( this.scale.x + this.scale.y + this.scale.z ) / 3 );
@@ -27118,7 +27014,7 @@ Points.prototype = Object.assign( Object.create( Object3D.prototype ), {
 
 		//
 
-		_inverseMatrix$2.copy( matrixWorld ).invert();
+		_inverseMatrix$2.getInverse( matrixWorld );
 		_ray$2.copy( raycaster.ray ).applyMatrix4( _inverseMatrix$2 );
 
 		const localThreshold = threshold / ( ( this.scale.x + this.scale.y + this.scale.z ) / 3 );
@@ -27730,7 +27626,9 @@ Geometry.prototype = Object.assign( Object.create( EventDispatcher.prototype ), 
 
 	},
 
-	computeVertexNormals: function ( areaWeighted = true ) {
+	computeVertexNormals: function ( areaWeighted ) {
+
+		if ( areaWeighted === undefined ) areaWeighted = true;
 
 		const vertices = new Array( this.vertices.length );
 
@@ -27986,7 +27884,7 @@ Geometry.prototype = Object.assign( Object.create( EventDispatcher.prototype ), 
 
 	},
 
-	merge: function ( geometry, matrix, materialIndexOffset = 0 ) {
+	merge: function ( geometry, matrix, materialIndexOffset ) {
 
 		if ( ! ( geometry && geometry.isGeometry ) ) {
 
@@ -28003,6 +27901,8 @@ Geometry.prototype = Object.assign( Object.create( EventDispatcher.prototype ), 
 			faces2 = geometry.faces,
 			colors1 = this.colors,
 			colors2 = geometry.colors;
+
+		if ( materialIndexOffset === undefined ) materialIndexOffset = 0;
 
 		if ( matrix !== undefined ) {
 
@@ -28126,11 +28026,12 @@ Geometry.prototype = Object.assign( Object.create( EventDispatcher.prototype ), 
 	 * and faces' vertices are updated.
 	 */
 
-	mergeVertices: function ( precisionPoints = 4 ) {
+	mergeVertices: function () {
 
 		const verticesMap = {}; // Hashmap for looking up vertices by position coordinates (and making sure they are unique)
 		const unique = [], changes = [];
 
+		const precisionPoints = 4; // number of decimal points, e.g. 4 for epsilon of 0.0001
 		const precision = Math.pow( 10, precisionPoints );
 
 		for ( let i = 0, il = this.vertices.length; i < il; i ++ ) {
@@ -34485,9 +34386,11 @@ const AnimationUtils = {
 
 	},
 
-	makeClipAdditive: function ( targetClip, referenceFrame = 0, referenceClip = targetClip, fps = 30 ) {
+	makeClipAdditive: function ( targetClip, referenceFrame, referenceClip, fps ) {
 
-		if ( fps <= 0 ) fps = 30;
+		if ( referenceFrame === undefined ) referenceFrame = 0;
+		if ( referenceClip === undefined ) referenceClip = targetClip;
+		if ( fps === undefined || fps <= 0 ) fps = 30;
 
 		const numTracks = referenceClip.tracks.length;
 		const referenceTime = referenceFrame / fps;
@@ -37234,7 +37137,9 @@ Object.assign( Curve.prototype, {
 
 	// Get sequence of points using getPoint( t )
 
-	getPoints: function ( divisions = 5 ) {
+	getPoints: function ( divisions ) {
+
+		if ( divisions === undefined ) divisions = 5;
 
 		const points = [];
 
@@ -37250,7 +37155,9 @@ Object.assign( Curve.prototype, {
 
 	// Get sequence of points using getPointAt( u )
 
-	getSpacedPoints: function ( divisions = 5 ) {
+	getSpacedPoints: function ( divisions ) {
+
+		if ( divisions === undefined ) divisions = 5;
 
 		const points = [];
 
@@ -38757,7 +38664,9 @@ CurvePath.prototype = Object.assign( Object.create( Curve.prototype ), {
 
 	},
 
-	getSpacedPoints: function ( divisions = 40 ) {
+	getSpacedPoints: function ( divisions ) {
+
+		if ( divisions === undefined ) divisions = 40;
 
 		const points = [];
 
@@ -39525,7 +39434,9 @@ PointLightShadow.prototype = Object.assign( Object.create( LightShadow.prototype
 
 	isPointLightShadow: true,
 
-	updateMatrices: function ( light, viewportIndex = 0 ) {
+	updateMatrices: function ( light, viewportIndex ) {
+
+		if ( viewportIndex === undefined ) viewportIndex = 0;
 
 		const camera = this.camera,
 			shadowMatrix = this.matrix,
@@ -39713,7 +39624,7 @@ OrthographicCamera.prototype = Object.assign( Object.create( Camera.prototype ),
 
 		this.projectionMatrix.makeOrthographic( left, right, top, bottom, this.near, this.far );
 
-		this.projectionMatrixInverse.copy( this.projectionMatrix ).invert();
+		this.projectionMatrixInverse.getInverse( this.projectionMatrix );
 
 	},
 
@@ -40834,7 +40745,7 @@ class ObjectLoader extends Loader {
 
 	parse( json, onLoad ) {
 
-		const shapes = this.parseShapes( json.shapes );
+		const shapes = this.parseShape( json.shapes );
 		const geometries = this.parseGeometries( json.geometries, shapes );
 
 		const images = this.parseImages( json.images, function () {
@@ -40847,9 +40758,6 @@ class ObjectLoader extends Loader {
 		const materials = this.parseMaterials( json.materials, textures );
 
 		const object = this.parseObject( json.object, geometries, materials );
-		const skeletons = this.parseSkeletons( json.skeletons, object );
-
-		this.bindSkeletons( object, skeletons );
 
 		if ( json.animations ) {
 
@@ -40867,7 +40775,7 @@ class ObjectLoader extends Loader {
 
 	}
 
-	parseShapes( json ) {
+	parseShape( json ) {
 
 		const shapes = {};
 
@@ -40884,37 +40792,6 @@ class ObjectLoader extends Loader {
 		}
 
 		return shapes;
-
-	}
-
-	parseSkeletons( json, object ) {
-
-		const skeletons = {};
-		const bones = {};
-
-		// generate bone lookup table
-
-		object.traverse( function ( child ) {
-
-			if ( child.isBone ) bones[ child.uuid ] = child;
-
-		} );
-
-		// create skeletons
-
-		if ( json !== undefined ) {
-
-			for ( let i = 0, l = json.length; i < l; i ++ ) {
-
-				const skeleton = new Skeleton().fromJSON( json[ i ], bones );
-
-				skeletons[ skeleton.uuid ] = skeleton;
-
-			}
-
-		}
-
-		return skeletons;
 
 	}
 
@@ -41584,16 +41461,7 @@ class ObjectLoader extends Loader {
 
 			case 'SkinnedMesh':
 
-				geometry = getGeometry( data.geometry );
-			 	material = getMaterial( data.material );
-
-				object = new SkinnedMesh( geometry, material );
-
-				if ( data.bindMode !== undefined ) object.bindMode = data.bindMode;
-				if ( data.bindMatrix !== undefined ) object.bindMatrix.fromArray( data.bindMatrix );
-				if ( data.skeleton !== undefined ) object.skeleton = data.skeleton;
-
-				break;
+				console.warn( 'THREE.ObjectLoader.parseObject() does not support SkinnedMesh yet.' );
 
 			case 'Mesh':
 
@@ -41656,12 +41524,6 @@ class ObjectLoader extends Loader {
 			case 'Group':
 
 				object = new Group();
-
-				break;
-
-			case 'Bone':
-
-				object = new Bone();
 
 				break;
 
@@ -41744,32 +41606,6 @@ class ObjectLoader extends Loader {
 		}
 
 		return object;
-
-	}
-
-	bindSkeletons( object, skeletons ) {
-
-		if ( Object.keys( skeletons ).length === 0 ) return;
-
-		object.traverse( function ( child ) {
-
-			if ( child.isSkinnedMesh === true && child.skeleton !== undefined ) {
-
-				const skeleton = skeletons[ child.skeleton ];
-
-				if ( skeleton === undefined ) {
-
-					console.warn( 'THREE.ObjectLoader: No skeleton found with UUID:', child.skeleton );
-
-				} else {
-
-					child.bind( skeleton, child.bindMatrix );
-
-				}
-
-			}
-
-		} );
 
 	}
 
@@ -42205,7 +42041,9 @@ Object.assign( Font.prototype, {
 
 	isFont: true,
 
-	generateShapes: function ( text, size = 100 ) {
+	generateShapes: function ( text, size ) {
+
+		if ( size === undefined ) size = 100;
 
 		const shapes = [];
 		const paths = createPaths( text, size, this.data );
@@ -42922,7 +42760,9 @@ class Audio extends Object3D {
 
 	}
 
-	play( delay = 0 ) {
+	play( delay ) {
+
+		if ( delay === undefined ) delay = 0;
 
 		if ( this.isPlaying === true ) {
 
@@ -47157,7 +46997,7 @@ class SkeletonHelper extends LineSegments {
 		const geometry = this.geometry;
 		const position = geometry.getAttribute( 'position' );
 
-		_matrixWorldInv.copy( this.root.matrixWorld ).invert();
+		_matrixWorldInv.getInverse( this.root.matrixWorld );
 
 		for ( let i = 0, j = 0; i < bones.length; i ++ ) {
 
@@ -47907,9 +47747,9 @@ class Box3Helper extends LineSegments {
 
 class PlaneHelper extends Line {
 
-	constructor( plane, size = 1, hex = 0xffff00 ) {
+	constructor( plane, size, hex ) {
 
-		const color = hex;
+		const color = ( hex !== undefined ) ? hex : 0xffff00;
 
 		const positions = [ 1, - 1, 1, - 1, 1, 1, - 1, - 1, 1, 1, 1, 1, - 1, 1, 1, - 1, - 1, 1, 1, - 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0 ];
 
@@ -47923,7 +47763,7 @@ class PlaneHelper extends Line {
 
 		this.plane = plane;
 
-		this.size = size;
+		this.size = ( size === undefined ) ? 1 : size;
 
 		const positions2 = [ 1, 1, 1, - 1, 1, 1, - 1, - 1, 1, 1, 1, 1, - 1, - 1, 1, 1, - 1, 1 ];
 
@@ -48084,64 +47924,6 @@ class AxesHelper extends LineSegments {
 	}
 
 }
-
-const _floatView = new Float32Array( 1 );
-const _int32View = new Int32Array( _floatView.buffer );
-
-const DataUtils = {
-
-	// Converts float32 to float16 (stored as uint16 value).
-
-	toHalfFloat: function ( val ) {
-
-		// Source: http://gamedev.stackexchange.com/questions/17326/conversion-of-a-number-from-single-precision-floating-point-representation-to-a/17410#17410
-
-		/* This method is faster than the OpenEXR implementation (very often
-		* used, eg. in Ogre), with the additional benefit of rounding, inspired
-		* by James Tursa?s half-precision code. */
-
-		_floatView[ 0 ] = val;
-		const x = _int32View[ 0 ];
-
-		let bits = ( x >> 16 ) & 0x8000; /* Get the sign */
-		let m = ( x >> 12 ) & 0x07ff; /* Keep one extra bit for rounding */
-		const e = ( x >> 23 ) & 0xff; /* Using int is faster here */
-
-		/* If zero, or denormal, or exponent underflows too much for a denormal
-			* half, return signed zero. */
-		if ( e < 103 ) return bits;
-
-		/* If NaN, return NaN. If Inf or exponent overflow, return Inf. */
-		if ( e > 142 ) {
-
-			bits |= 0x7c00;
-			/* If exponent was 0xff and one mantissa bit was set, it means NaN,
-						* not Inf, so make sure we set one mantissa bit too. */
-			bits |= ( ( e == 255 ) ? 0 : 1 ) && ( x & 0x007fffff );
-			return bits;
-
-		}
-
-		/* If exponent underflows but not too much, return a denormal */
-		if ( e < 113 ) {
-
-			m |= 0x0800;
-			/* Extra rounding may overflow and set mantissa to 0 and exponent
-				* to 1, which is OK. */
-			bits |= ( m >> ( 114 - e ) ) + ( ( m >> ( 113 - e ) ) & 1 );
-			return bits;
-
-		}
-
-		bits |= ( ( e - 112 ) << 10 ) | ( m >> 1 );
-		/* Extra rounding. An overflow will set mantissa to 0 and increment
-			* the exponent, which is OK. */
-		bits += m & 1;
-		return bits;
-
-	}
-
-};
 
 const LOD_MIN = 4;
 const LOD_MAX = 8;
@@ -49093,7 +48875,9 @@ function MeshFaceMaterial( materials ) {
 
 }
 
-function MultiMaterial( materials = [] ) {
+function MultiMaterial( materials ) {
+
+	if ( materials === undefined ) materials = [];
 
 	console.warn( 'THREE.MultiMaterial has been removed. Use an Array instead.' );
 	materials.isMultiMaterial = true;
@@ -49589,12 +49373,6 @@ Object.assign( Matrix3.prototype, {
 
 		console.error( 'THREE.Matrix3: .applyToVector3Array() has been removed.' );
 
-	},
-	getInverse: function ( matrix ) {
-
-		console.warn( 'THREE.Matrix3: .getInverse() has been removed. Use matrixInv.copy( matrix ).invert(); instead.' );
-		return this.copy( matrix ).invert();
-
 	}
 
 } );
@@ -49700,12 +49478,6 @@ Object.assign( Matrix4.prototype, {
 		console.warn( 'THREE.Matrix4: .makeFrustum() has been removed. Use .makePerspective( left, right, top, bottom, near, far ) instead.' );
 		return this.makePerspective( left, right, top, bottom, near, far );
 
-	},
-	getInverse: function ( matrix ) {
-
-		console.warn( 'THREE.Matrix4: .getInverse() has been removed. Use matrixInv.copy( matrix ).invert(); instead.' );
-		return this.copy( matrix ).invert();
-
 	}
 
 } );
@@ -49717,22 +49489,12 @@ Plane.prototype.isIntersectionLine = function ( line ) {
 
 };
 
-Object.assign( Quaternion.prototype, {
+Quaternion.prototype.multiplyVector3 = function ( vector ) {
 
-	multiplyVector3: function ( vector ) {
+	console.warn( 'THREE.Quaternion: .multiplyVector3() has been removed. Use is now vector.applyQuaternion( quaternion ) instead.' );
+	return vector.applyQuaternion( this );
 
-		console.warn( 'THREE.Quaternion: .multiplyVector3() has been removed. Use is now vector.applyQuaternion( quaternion ) instead.' );
-		return vector.applyQuaternion( this );
-
-	},
-	inverse: function ( ) {
-
-		console.warn( 'THREE.Quaternion: .inverse() has been renamed to invert().' );
-		return this.invert();
-
-	}
-
-} );
+};
 
 Object.assign( Ray.prototype, {
 
@@ -51247,4 +51009,4 @@ if ( typeof __THREE_DEVTOOLS__ !== 'undefined' ) {
 
 }
 
-export { ACESFilmicToneMapping, AddEquation, AddOperation, AdditiveAnimationBlendMode, AdditiveBlending, AlphaFormat, AlwaysDepth, AlwaysStencilFunc, AmbientLight, AmbientLightProbe, AnimationClip, AnimationLoader, AnimationMixer, AnimationObjectGroup, AnimationUtils, ArcCurve, ArrayCamera, ArrowHelper, Audio, AudioAnalyser, AudioContext, AudioListener, AudioLoader, AxesHelper, AxisHelper, BackSide, BasicDepthPacking, BasicShadowMap, BinaryTextureLoader, Bone, BooleanKeyframeTrack, BoundingBoxHelper, Box2, Box3, Box3Helper, BoxBufferGeometry, BoxGeometry, BoxHelper, BufferAttribute, BufferGeometry, BufferGeometryLoader, ByteType, Cache, Camera, CameraHelper, CanvasRenderer, CanvasTexture, CatmullRomCurve3, CineonToneMapping, CircleBufferGeometry, CircleGeometry, ClampToEdgeWrapping, Clock, ClosedSplineCurve3, Color, ColorKeyframeTrack, CompressedTexture, CompressedTextureLoader, ConeBufferGeometry, ConeGeometry, CubeCamera, BoxGeometry as CubeGeometry, CubeReflectionMapping, CubeRefractionMapping, CubeTexture, CubeTextureLoader, CubeUVReflectionMapping, CubeUVRefractionMapping, CubicBezierCurve, CubicBezierCurve3, CubicInterpolant, CullFaceBack, CullFaceFront, CullFaceFrontBack, CullFaceNone, Curve, CurvePath, CustomBlending, CustomToneMapping, CylinderBufferGeometry, CylinderGeometry, Cylindrical, DataTexture, DataTexture2DArray, DataTexture3D, DataTextureLoader, DataUtils, DecrementStencilOp, DecrementWrapStencilOp, DefaultLoadingManager, DepthFormat, DepthStencilFormat, DepthTexture, DirectionalLight, DirectionalLightHelper, DiscreteInterpolant, DodecahedronBufferGeometry, DodecahedronGeometry, DoubleSide, DstAlphaFactor, DstColorFactor, DynamicBufferAttribute, DynamicCopyUsage, DynamicDrawUsage, DynamicReadUsage, EdgesGeometry, EdgesHelper, EllipseCurve, EqualDepth, EqualStencilFunc, EquirectangularReflectionMapping, EquirectangularRefractionMapping, Euler, EventDispatcher, ExtrudeBufferGeometry, ExtrudeGeometry, Face3, Face4, FaceColors, FileLoader, FlatShading, Float16BufferAttribute, Float32Attribute, Float32BufferAttribute, Float64Attribute, Float64BufferAttribute, FloatType, Fog, FogExp2, Font, FontLoader, FrontSide, Frustum, GLBufferAttribute, GLSL1, GLSL3, GammaEncoding, Geometry, GeometryUtils, GreaterDepth, GreaterEqualDepth, GreaterEqualStencilFunc, GreaterStencilFunc, GridHelper, Group, HalfFloatType, HemisphereLight, HemisphereLightHelper, HemisphereLightProbe, IcosahedronBufferGeometry, IcosahedronGeometry, ImageBitmapLoader, ImageLoader, ImageUtils, ImmediateRenderObject, IncrementStencilOp, IncrementWrapStencilOp, InstancedBufferAttribute, InstancedBufferGeometry, InstancedInterleavedBuffer, InstancedMesh, Int16Attribute, Int16BufferAttribute, Int32Attribute, Int32BufferAttribute, Int8Attribute, Int8BufferAttribute, IntType, InterleavedBuffer, InterleavedBufferAttribute, Interpolant, InterpolateDiscrete, InterpolateLinear, InterpolateSmooth, InvertStencilOp, JSONLoader, KeepStencilOp, KeyframeTrack, LOD, LatheBufferGeometry, LatheGeometry, Layers, LensFlare, LessDepth, LessEqualDepth, LessEqualStencilFunc, LessStencilFunc, Light, LightProbe, Line, Line3, LineBasicMaterial, LineCurve, LineCurve3, LineDashedMaterial, LineLoop, LinePieces, LineSegments, LineStrip, LinearEncoding, LinearFilter, LinearInterpolant, LinearMipMapLinearFilter, LinearMipMapNearestFilter, LinearMipmapLinearFilter, LinearMipmapNearestFilter, LinearToneMapping, Loader, LoaderUtils, LoadingManager, LogLuvEncoding, LoopOnce, LoopPingPong, LoopRepeat, LuminanceAlphaFormat, LuminanceFormat, MOUSE, Material, MaterialLoader, MathUtils as Math, MathUtils, Matrix3, Matrix4, MaxEquation, Mesh, MeshBasicMaterial, MeshDepthMaterial, MeshDistanceMaterial, MeshFaceMaterial, MeshLambertMaterial, MeshMatcapMaterial, MeshNormalMaterial, MeshPhongMaterial, MeshPhysicalMaterial, MeshStandardMaterial, MeshToonMaterial, MinEquation, MirroredRepeatWrapping, MixOperation, MultiMaterial, MultiplyBlending, MultiplyOperation, NearestFilter, NearestMipMapLinearFilter, NearestMipMapNearestFilter, NearestMipmapLinearFilter, NearestMipmapNearestFilter, NeverDepth, NeverStencilFunc, NoBlending, NoColors, NoToneMapping, NormalAnimationBlendMode, NormalBlending, NotEqualDepth, NotEqualStencilFunc, NumberKeyframeTrack, Object3D, ObjectLoader, ObjectSpaceNormalMap, OctahedronBufferGeometry, OctahedronGeometry, OneFactor, OneMinusDstAlphaFactor, OneMinusDstColorFactor, OneMinusSrcAlphaFactor, OneMinusSrcColorFactor, OrthographicCamera, PCFShadowMap, PCFSoftShadowMap, PMREMGenerator, ParametricBufferGeometry, ParametricGeometry, Particle, ParticleBasicMaterial, ParticleSystem, ParticleSystemMaterial, Path, PerspectiveCamera, Plane, PlaneBufferGeometry, PlaneGeometry, PlaneHelper, PointCloud, PointCloudMaterial, PointLight, PointLightHelper, Points, PointsMaterial, PolarGridHelper, PolyhedronBufferGeometry, PolyhedronGeometry, PositionalAudio, PropertyBinding, PropertyMixer, QuadraticBezierCurve, QuadraticBezierCurve3, Quaternion, QuaternionKeyframeTrack, QuaternionLinearInterpolant, REVISION, RGBADepthPacking, RGBAFormat, RGBAIntegerFormat, RGBA_ASTC_10x10_Format, RGBA_ASTC_10x5_Format, RGBA_ASTC_10x6_Format, RGBA_ASTC_10x8_Format, RGBA_ASTC_12x10_Format, RGBA_ASTC_12x12_Format, RGBA_ASTC_4x4_Format, RGBA_ASTC_5x4_Format, RGBA_ASTC_5x5_Format, RGBA_ASTC_6x5_Format, RGBA_ASTC_6x6_Format, RGBA_ASTC_8x5_Format, RGBA_ASTC_8x6_Format, RGBA_ASTC_8x8_Format, RGBA_BPTC_Format, RGBA_ETC2_EAC_Format, RGBA_PVRTC_2BPPV1_Format, RGBA_PVRTC_4BPPV1_Format, RGBA_S3TC_DXT1_Format, RGBA_S3TC_DXT3_Format, RGBA_S3TC_DXT5_Format, RGBDEncoding, RGBEEncoding, RGBEFormat, RGBFormat, RGBIntegerFormat, RGBM16Encoding, RGBM7Encoding, RGB_ETC1_Format, RGB_ETC2_Format, RGB_PVRTC_2BPPV1_Format, RGB_PVRTC_4BPPV1_Format, RGB_S3TC_DXT1_Format, RGFormat, RGIntegerFormat, RawShaderMaterial, Ray, Raycaster, RectAreaLight, RedFormat, RedIntegerFormat, ReinhardToneMapping, RepeatWrapping, ReplaceStencilOp, ReverseSubtractEquation, RingBufferGeometry, RingGeometry, SRGB8_ALPHA8_ASTC_10x10_Format, SRGB8_ALPHA8_ASTC_10x5_Format, SRGB8_ALPHA8_ASTC_10x6_Format, SRGB8_ALPHA8_ASTC_10x8_Format, SRGB8_ALPHA8_ASTC_12x10_Format, SRGB8_ALPHA8_ASTC_12x12_Format, SRGB8_ALPHA8_ASTC_4x4_Format, SRGB8_ALPHA8_ASTC_5x4_Format, SRGB8_ALPHA8_ASTC_5x5_Format, SRGB8_ALPHA8_ASTC_6x5_Format, SRGB8_ALPHA8_ASTC_6x6_Format, SRGB8_ALPHA8_ASTC_8x5_Format, SRGB8_ALPHA8_ASTC_8x6_Format, SRGB8_ALPHA8_ASTC_8x8_Format, Scene, SceneUtils, ShaderChunk, ShaderLib, ShaderMaterial, ShadowMaterial, Shape, ShapeBufferGeometry, ShapeGeometry, ShapePath, ShapeUtils, ShortType, Skeleton, SkeletonHelper, SkinnedMesh, SmoothShading, Sphere, SphereBufferGeometry, SphereGeometry, Spherical, SphericalHarmonics3, Spline, SplineCurve, SplineCurve3, SpotLight, SpotLightHelper, Sprite, SpriteMaterial, SrcAlphaFactor, SrcAlphaSaturateFactor, SrcColorFactor, StaticCopyUsage, StaticDrawUsage, StaticReadUsage, StereoCamera, StreamCopyUsage, StreamDrawUsage, StreamReadUsage, StringKeyframeTrack, SubtractEquation, SubtractiveBlending, TOUCH, TangentSpaceNormalMap, TetrahedronBufferGeometry, TetrahedronGeometry, TextBufferGeometry, TextGeometry, Texture, TextureLoader, TorusBufferGeometry, TorusGeometry, TorusKnotBufferGeometry, TorusKnotGeometry, Triangle, TriangleFanDrawMode, TriangleStripDrawMode, TrianglesDrawMode, TubeBufferGeometry, TubeGeometry, UVMapping, Uint16Attribute, Uint16BufferAttribute, Uint32Attribute, Uint32BufferAttribute, Uint8Attribute, Uint8BufferAttribute, Uint8ClampedAttribute, Uint8ClampedBufferAttribute, Uniform, UniformsLib, UniformsUtils, UnsignedByteType, UnsignedInt248Type, UnsignedIntType, UnsignedShort4444Type, UnsignedShort5551Type, UnsignedShort565Type, UnsignedShortType, VSMShadowMap, Vector2, Vector3, Vector4, VectorKeyframeTrack, Vertex, VertexColors, VideoTexture, WebGL1Renderer, WebGLCubeRenderTarget, WebGLMultisampleRenderTarget, WebGLRenderTarget, WebGLRenderTargetCube, WebGLRenderer, WebGLUtils, WireframeGeometry, WireframeHelper, WrapAroundEnding, XHRLoader, ZeroCurvatureEnding, ZeroFactor, ZeroSlopeEnding, ZeroStencilOp, sRGBEncoding };
+export { ACESFilmicToneMapping, AddEquation, AddOperation, AdditiveAnimationBlendMode, AdditiveBlending, AlphaFormat, AlwaysDepth, AlwaysStencilFunc, AmbientLight, AmbientLightProbe, AnimationClip, AnimationLoader, AnimationMixer, AnimationObjectGroup, AnimationUtils, ArcCurve, ArrayCamera, ArrowHelper, Audio, AudioAnalyser, AudioContext, AudioListener, AudioLoader, AxesHelper, AxisHelper, BackSide, BasicDepthPacking, BasicShadowMap, BinaryTextureLoader, Bone, BooleanKeyframeTrack, BoundingBoxHelper, Box2, Box3, Box3Helper, BoxBufferGeometry, BoxGeometry, BoxHelper, BufferAttribute, BufferGeometry, BufferGeometryLoader, ByteType, Cache, Camera, CameraHelper, CanvasRenderer, CanvasTexture, CatmullRomCurve3, CineonToneMapping, CircleBufferGeometry, CircleGeometry, ClampToEdgeWrapping, Clock, ClosedSplineCurve3, Color, ColorKeyframeTrack, CompressedTexture, CompressedTextureLoader, ConeBufferGeometry, ConeGeometry, CubeCamera, BoxGeometry as CubeGeometry, CubeReflectionMapping, CubeRefractionMapping, CubeTexture, CubeTextureLoader, CubeUVReflectionMapping, CubeUVRefractionMapping, CubicBezierCurve, CubicBezierCurve3, CubicInterpolant, CullFaceBack, CullFaceFront, CullFaceFrontBack, CullFaceNone, Curve, CurvePath, CustomBlending, CustomToneMapping, CylinderBufferGeometry, CylinderGeometry, Cylindrical, DataTexture, DataTexture2DArray, DataTexture3D, DataTextureLoader, DecrementStencilOp, DecrementWrapStencilOp, DefaultLoadingManager, DepthFormat, DepthStencilFormat, DepthTexture, DirectionalLight, DirectionalLightHelper, DiscreteInterpolant, DodecahedronBufferGeometry, DodecahedronGeometry, DoubleSide, DstAlphaFactor, DstColorFactor, DynamicBufferAttribute, DynamicCopyUsage, DynamicDrawUsage, DynamicReadUsage, EdgesGeometry, EdgesHelper, EllipseCurve, EqualDepth, EqualStencilFunc, EquirectangularReflectionMapping, EquirectangularRefractionMapping, Euler, EventDispatcher, ExtrudeBufferGeometry, ExtrudeGeometry, Face3, Face4, FaceColors, FileLoader, FlatShading, Float32Attribute, Float32BufferAttribute, Float64Attribute, Float64BufferAttribute, FloatType, Fog, FogExp2, Font, FontLoader, FrontSide, Frustum, GLBufferAttribute, GLSL1, GLSL3, GammaEncoding, Geometry, GeometryUtils, GreaterDepth, GreaterEqualDepth, GreaterEqualStencilFunc, GreaterStencilFunc, GridHelper, Group, HalfFloatType, HemisphereLight, HemisphereLightHelper, HemisphereLightProbe, IcosahedronBufferGeometry, IcosahedronGeometry, ImageBitmapLoader, ImageLoader, ImageUtils, ImmediateRenderObject, IncrementStencilOp, IncrementWrapStencilOp, InstancedBufferAttribute, InstancedBufferGeometry, InstancedInterleavedBuffer, InstancedMesh, Int16Attribute, Int16BufferAttribute, Int32Attribute, Int32BufferAttribute, Int8Attribute, Int8BufferAttribute, IntType, InterleavedBuffer, InterleavedBufferAttribute, Interpolant, InterpolateDiscrete, InterpolateLinear, InterpolateSmooth, InvertStencilOp, JSONLoader, KeepStencilOp, KeyframeTrack, LOD, LatheBufferGeometry, LatheGeometry, Layers, LensFlare, LessDepth, LessEqualDepth, LessEqualStencilFunc, LessStencilFunc, Light, LightProbe, Line, Line3, LineBasicMaterial, LineCurve, LineCurve3, LineDashedMaterial, LineLoop, LinePieces, LineSegments, LineStrip, LinearEncoding, LinearFilter, LinearInterpolant, LinearMipMapLinearFilter, LinearMipMapNearestFilter, LinearMipmapLinearFilter, LinearMipmapNearestFilter, LinearToneMapping, Loader, LoaderUtils, LoadingManager, LogLuvEncoding, LoopOnce, LoopPingPong, LoopRepeat, LuminanceAlphaFormat, LuminanceFormat, MOUSE, Material, MaterialLoader, MathUtils as Math, MathUtils, Matrix3, Matrix4, MaxEquation, Mesh, MeshBasicMaterial, MeshDepthMaterial, MeshDistanceMaterial, MeshFaceMaterial, MeshLambertMaterial, MeshMatcapMaterial, MeshNormalMaterial, MeshPhongMaterial, MeshPhysicalMaterial, MeshStandardMaterial, MeshToonMaterial, MinEquation, MirroredRepeatWrapping, MixOperation, MultiMaterial, MultiplyBlending, MultiplyOperation, NearestFilter, NearestMipMapLinearFilter, NearestMipMapNearestFilter, NearestMipmapLinearFilter, NearestMipmapNearestFilter, NeverDepth, NeverStencilFunc, NoBlending, NoColors, NoToneMapping, NormalAnimationBlendMode, NormalBlending, NotEqualDepth, NotEqualStencilFunc, NumberKeyframeTrack, Object3D, ObjectLoader, ObjectSpaceNormalMap, OctahedronBufferGeometry, OctahedronGeometry, OneFactor, OneMinusDstAlphaFactor, OneMinusDstColorFactor, OneMinusSrcAlphaFactor, OneMinusSrcColorFactor, OrthographicCamera, PCFShadowMap, PCFSoftShadowMap, PMREMGenerator, ParametricBufferGeometry, ParametricGeometry, Particle, ParticleBasicMaterial, ParticleSystem, ParticleSystemMaterial, Path, PerspectiveCamera, Plane, PlaneBufferGeometry, PlaneGeometry, PlaneHelper, PointCloud, PointCloudMaterial, PointLight, PointLightHelper, Points, PointsMaterial, PolarGridHelper, PolyhedronBufferGeometry, PolyhedronGeometry, PositionalAudio, PropertyBinding, PropertyMixer, QuadraticBezierCurve, QuadraticBezierCurve3, Quaternion, QuaternionKeyframeTrack, QuaternionLinearInterpolant, REVISION, RGBADepthPacking, RGBAFormat, RGBAIntegerFormat, RGBA_ASTC_10x10_Format, RGBA_ASTC_10x5_Format, RGBA_ASTC_10x6_Format, RGBA_ASTC_10x8_Format, RGBA_ASTC_12x10_Format, RGBA_ASTC_12x12_Format, RGBA_ASTC_4x4_Format, RGBA_ASTC_5x4_Format, RGBA_ASTC_5x5_Format, RGBA_ASTC_6x5_Format, RGBA_ASTC_6x6_Format, RGBA_ASTC_8x5_Format, RGBA_ASTC_8x6_Format, RGBA_ASTC_8x8_Format, RGBA_BPTC_Format, RGBA_ETC2_EAC_Format, RGBA_PVRTC_2BPPV1_Format, RGBA_PVRTC_4BPPV1_Format, RGBA_S3TC_DXT1_Format, RGBA_S3TC_DXT3_Format, RGBA_S3TC_DXT5_Format, RGBDEncoding, RGBEEncoding, RGBEFormat, RGBFormat, RGBIntegerFormat, RGBM16Encoding, RGBM7Encoding, RGB_ETC1_Format, RGB_ETC2_Format, RGB_PVRTC_2BPPV1_Format, RGB_PVRTC_4BPPV1_Format, RGB_S3TC_DXT1_Format, RGFormat, RGIntegerFormat, RawShaderMaterial, Ray, Raycaster, RectAreaLight, RedFormat, RedIntegerFormat, ReinhardToneMapping, RepeatWrapping, ReplaceStencilOp, ReverseSubtractEquation, RingBufferGeometry, RingGeometry, SRGB8_ALPHA8_ASTC_10x10_Format, SRGB8_ALPHA8_ASTC_10x5_Format, SRGB8_ALPHA8_ASTC_10x6_Format, SRGB8_ALPHA8_ASTC_10x8_Format, SRGB8_ALPHA8_ASTC_12x10_Format, SRGB8_ALPHA8_ASTC_12x12_Format, SRGB8_ALPHA8_ASTC_4x4_Format, SRGB8_ALPHA8_ASTC_5x4_Format, SRGB8_ALPHA8_ASTC_5x5_Format, SRGB8_ALPHA8_ASTC_6x5_Format, SRGB8_ALPHA8_ASTC_6x6_Format, SRGB8_ALPHA8_ASTC_8x5_Format, SRGB8_ALPHA8_ASTC_8x6_Format, SRGB8_ALPHA8_ASTC_8x8_Format, Scene, SceneUtils, ShaderChunk, ShaderLib, ShaderMaterial, ShadowMaterial, Shape, ShapeBufferGeometry, ShapeGeometry, ShapePath, ShapeUtils, ShortType, Skeleton, SkeletonHelper, SkinnedMesh, SmoothShading, Sphere, SphereBufferGeometry, SphereGeometry, Spherical, SphericalHarmonics3, Spline, SplineCurve, SplineCurve3, SpotLight, SpotLightHelper, Sprite, SpriteMaterial, SrcAlphaFactor, SrcAlphaSaturateFactor, SrcColorFactor, StaticCopyUsage, StaticDrawUsage, StaticReadUsage, StereoCamera, StreamCopyUsage, StreamDrawUsage, StreamReadUsage, StringKeyframeTrack, SubtractEquation, SubtractiveBlending, TOUCH, TangentSpaceNormalMap, TetrahedronBufferGeometry, TetrahedronGeometry, TextBufferGeometry, TextGeometry, Texture, TextureLoader, TorusBufferGeometry, TorusGeometry, TorusKnotBufferGeometry, TorusKnotGeometry, Triangle, TriangleFanDrawMode, TriangleStripDrawMode, TrianglesDrawMode, TubeBufferGeometry, TubeGeometry, UVMapping, Uint16Attribute, Uint16BufferAttribute, Uint32Attribute, Uint32BufferAttribute, Uint8Attribute, Uint8BufferAttribute, Uint8ClampedAttribute, Uint8ClampedBufferAttribute, Uniform, UniformsLib, UniformsUtils, UnsignedByteType, UnsignedInt248Type, UnsignedIntType, UnsignedShort4444Type, UnsignedShort5551Type, UnsignedShort565Type, UnsignedShortType, VSMShadowMap, Vector2, Vector3, Vector4, VectorKeyframeTrack, Vertex, VertexColors, VideoTexture, WebGL1Renderer, WebGLCubeRenderTarget, WebGLMultisampleRenderTarget, WebGLRenderTarget, WebGLRenderTargetCube, WebGLRenderer, WebGLUtils, WireframeGeometry, WireframeHelper, WrapAroundEnding, XHRLoader, ZeroCurvatureEnding, ZeroFactor, ZeroSlopeEnding, ZeroStencilOp, sRGBEncoding };

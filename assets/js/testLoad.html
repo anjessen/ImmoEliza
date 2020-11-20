@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Three.js Boilerplate</title>
+
+        <!--This is important to get a correct canvas size on mobile-->
+        <meta name='viewport' content='width=device-width, user-scalable=no'/>
+
+        <style>
+            body{
+                margin:0;
+                overflow:hidden;
+            }
+
+            /*
+              Next 2 paragraphs are a good practice. 
+              In IE/Edge you have to provide the cursor images.
+            */
+            canvas{
+                cursor:grab;
+                cursor:-webkit-grab;
+                cursor:-moz-grab;
+            }
+            canvas:active{
+                cursor:grabbing;
+                cursor:-webkit-grabbing;
+                cursor:-moz-grabbing;
+            }
+            #c {
+                display: block;
+                background: url(./bg.jpg) no-repeat center center;
+                background-size: cover;
+            }
+        </style>
+    </head>
+    <body>
+
+        <canvas id="c" style="width: 100vw;"></canvas>
+
+        <script src="./load.js" type="module"></script>
+    </body>
+</html>
