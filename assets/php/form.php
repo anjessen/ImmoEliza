@@ -6,7 +6,7 @@
     $garden_area = $_POST['garden-area'];
     $open_fire = $_POST['open-fire'];
     $surface = $_POST['surface'];
-    $room = $_POST['rooms'];
+    $facades = $_POST['facades'];
     $terrace = $_POST['terrace'];
     $terrace_area = $_POST['terrace-area'];
     $state_of_building = $_POST['state'];
@@ -22,7 +22,7 @@
         'garden-area' => [$garden_area],
         'open-fire' => [$open_fire],
         'surface' => [$surface],
-        'room' => [$room],
+        'facades' => [$facades],
         'terrace' => [$terrace],
         'terrace-area' => [$terrace_area],
         'state-of-building' =>[$state_of_building],
