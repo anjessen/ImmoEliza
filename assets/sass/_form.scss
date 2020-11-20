@@ -1,21 +1,30 @@
 .form{
-        .button{
+    background-color: $primary;
+    border-radius: 5%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    color: $white;
+
+    button{
         background: $quatriary;
         color: white;
         border: $quatriary;
-        border-radius: 5%;
+        border-radius: 10%;
         padding: 0.5rem;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+    .button{
+        background: $terciary;       
         transition: 1s;
     }
     .button:hover{
-        background: $terciary;
+        background: $quatriary;
         transition: 1s;
     }
     .display{
         display: none;
     }
     ::placeholder {
-        color: $secondary;
+        color: #cacaca;
         font-size: 1rem;
     }
 }
