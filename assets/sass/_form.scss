@@ -14,4 +14,8 @@
     .display{
         display: none;
     }
+    ::placeholder {
+        color: $secondary;
+        font-size: 1rem;
+    }
 }
