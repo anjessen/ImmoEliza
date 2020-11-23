@@ -1,5 +1,4 @@
 <?php
-
 namespace ImmoEliza;
 
 if(isset($_POST['inputAddress'],$_POST['inputAddress2'],$_POST['inputCityPC'],$_POST['inputCity'],$_POST['Type_of_property'],$_POST['rooms'],$_POST['House_area'])){

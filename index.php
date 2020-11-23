@@ -1,4 +1,5 @@
 <?php
+namespace ImmoEliza;
 require './assets/php/classes.php';
 ?>
 <!DOCTYPE html>
@@ -233,7 +234,7 @@ require './assets/php/classes.php';
     </section>
 
     <canvas id="c"></canvas>
-    
+
     <?php
         require './assets/php/form.php';
     ?>

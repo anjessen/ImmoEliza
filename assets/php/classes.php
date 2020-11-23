@@ -1,6 +1,4 @@
 <?php
-//imports
-
 namespace ImmoEliza;
 
 //Classes
