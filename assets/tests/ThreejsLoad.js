@@ -1,24 +1,29 @@
-    import * as THREE from '../src/three.js/build/three.module.js';
-    import {OrbitControls} from '../src/three.js/examples/jsm/controls/OrbitControls.js';
-    import {OBJLoader2} from '../src/three.js/examples/jsm/loaders/OBJLoader2.js';
+import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/build/three.module.js';
+import {TrackballControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/controls/TrackballControls.js';
+import {OBJLoader2} from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/loaders/OBJLoader2.js';
 
     function main() {
     const canvas = document.querySelector('#c');
-    const renderer = new THREE.WebGLRenderer({canvas});
+    const renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+    });
 
     const fov = 75;
-    const aspect = 2;  // the canvas default
+    const aspect = 2;
     const near = 0.1;
     const far = 1000;
     const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
     camera.position.set(150, 150, 250);
 
-    const controls = new OrbitControls(camera, canvas);
+    const controls = new TrackballControls(camera, canvas);
     controls.target.set(0, 100, 0);
-    controls.update();
+    
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color('black');
+
+    
+    //scene.background = new THREE.Color('black');
 
 /*     {
         const planeSize = 40;
@@ -42,8 +47,8 @@
     } */
 
     {
-        const skyColor = 0xB1E1FF;  // light blue
-        const groundColor = 0xB97A20;  // brownish orange
+        const skyColor = 0xB1E1FF;
+        const groundColor = 0xB97A20;
         const intensity = 1;
         const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
         scene.add(light);
@@ -61,8 +66,15 @@
 
     {
         const objLoader = new OBJLoader2();
-        objLoader.load('./CERF.obj', (root) => {
-        scene.add(root);
+        objLoader.load('./obj.obj', (root) => {
+        //scene.add(root);
+        var box = new THREE.Box3().setFromObject( root );
+        box.getCenter( root.position );
+        root.position.multiplyScalar( - 1 );
+
+        var pivot = new THREE.Group();
+        scene.add( pivot );
+        pivot.add( root );
         });
     }
 
@@ -86,6 +98,7 @@
         }
 
         renderer.render(scene, camera);
+        controls.update();
 
         requestAnimationFrame(render);
     }

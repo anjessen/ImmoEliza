@@ -1,6 +1,5 @@
 <?php
-//imports
-
+namespace ImmoEliza;
 
 //Classes
 
@@ -137,7 +136,8 @@ class Property{
     }
 }
 
-//Tests
+
+/* //Tests
 try{
     $prop = new Property("house", 6, "120.5");
 }catch(Exception $err){
@@ -154,9 +154,7 @@ try{
     $req = new Request($adress,$prop);
 }catch(Exception $err){
     error_log($err, 0);
-}
+} */
 
-
-//Functions
 
 ?>
