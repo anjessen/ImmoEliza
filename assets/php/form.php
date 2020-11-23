@@ -1,5 +1,8 @@
 <?php
-//include './classes.php';
+
+namespace ImmoEliza;
+
+require './classes.php';
 
 if(isset($_POST['inputAddress'],$_POST['inputAddress2'],$_POST['inputCityPC'],$_POST['inputCity'],$_POST['Type_of_property'],$_POST['rooms'],$_POST['House_area'])){
     $adress_road = $_POST['inputAddress'];
@@ -21,7 +24,7 @@ if(isset($_POST['inputAddress'],$_POST['inputAddress2'],$_POST['inputCityPC'],$_
     $swimming_pool = $_POST['swimming-pool'];
     $equiped_kitchen = $_POST['equiped-kitchen'];
 
-    $data = array(
+    /* $data = array(
         'adress_road' => $adress_road,
         'adress_number' => $adress_number,
         'adresse_city_pc' => $adress_city_pc,
@@ -40,18 +43,37 @@ if(isset($_POST['inputAddress'],$_POST['inputAddress2'],$_POST['inputCityPC'],$_
         'construction_year' => $construction_year,
         'swimming-pool' => $swimming_pool,
         'equiped-kitchen' => $equiped_kitchen,
-    );
+    ); */
 
     $adress = new Adress($adress_number,$adress_road,$adress_city_pc,$adress_city);
-
+    $property = new Property(
+        $type_of_property,
+        $number_of_rooms,
+        $house_area,
+        $garden_area,
+        $terrace_area,
+        $open_fire,
+        $land_area,
+        $facades,
+        $swimming_pool,
+        $state_of_building,
+        $construction_year,
+        $equiped_kitchen
+    );
+    $req = new Request($adress,$property);
 
 }
     echo '<pre>';
-    print_r($_POST);
+    print_r($adress);
     echo'</pre><br><br>';
 
     echo '<pre>';
-    print_r($data);
-    echo'</pre>';
+    print_r($property);
+    echo'</pre><br><br>';
+
+    echo '<pre>';
+    print_r($req);
+    echo'</pre><br><br>';
+
     //exit;
     ?>
