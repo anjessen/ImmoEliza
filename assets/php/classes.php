@@ -137,6 +137,7 @@ class Property{
     }
 }
 
+
 //Tests
 try{
     $prop = new Property("house", 6, "120.5");
@@ -156,7 +157,5 @@ try{
     error_log($err, 0);
 }
 
-
-//Functions
 
 ?>
