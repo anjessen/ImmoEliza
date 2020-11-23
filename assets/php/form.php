@@ -2,8 +2,6 @@
 
 namespace ImmoEliza;
 
-require './classes.php';
-
 if(isset($_POST['inputAddress'],$_POST['inputAddress2'],$_POST['inputCityPC'],$_POST['inputCity'],$_POST['Type_of_property'],$_POST['rooms'],$_POST['House_area'])){
     $adress_road = $_POST['inputAddress'];
     $adress_number = $_POST['inputAddress2'];
@@ -62,7 +60,7 @@ if(isset($_POST['inputAddress'],$_POST['inputAddress2'],$_POST['inputCityPC'],$_
     );
     $req = new Request($adress,$property);
 
-}
+    // test return
     echo '<pre>';
     print_r($adress);
     echo'</pre><br><br>';
@@ -74,6 +72,7 @@ if(isset($_POST['inputAddress'],$_POST['inputAddress2'],$_POST['inputCityPC'],$_
     echo '<pre>';
     print_r($req);
     echo'</pre><br><br>';
+}
 
     //exit;
     ?>
