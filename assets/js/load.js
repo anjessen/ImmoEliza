@@ -1,6 +1,6 @@
-    import * as THREE from '../src/three.js/build/three.module.js';
-    import {OrbitControls} from '../src/three.js/examples/jsm/controls/OrbitControls.js';
-    import {OBJLoader2} from '../src/three.js/examples/jsm/loaders/OBJLoader2.js';
+    import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/build/three.module.js';
+    import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/controls/OrbitControls.js';
+    import {OBJLoader2} from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/loaders/OBJLoader2.js';
 
     function main() {
     const canvas = document.querySelector('#c');
@@ -61,7 +61,7 @@
 
     {
         const objLoader = new OBJLoader2();
-        objLoader.load('./CERF.obj', (root) => {
+        objLoader.load('../src/CERF.obj', (root) => {
         scene.add(root);
         });
     }
