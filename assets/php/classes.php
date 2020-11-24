@@ -8,15 +8,15 @@ class Request{
 
     /**
      * Expected parameters
-     * @param Adress $adress object build with class Adress
+     * @param Adress $address object build with class Address
      * @param Property $property object build with class Property
      */
     public function __construct(
-        Adress $adress,
+        Address $address,
         Property $property
         ){
         try{
-            $this->adress = $adress;
+            $this->address = $address;
             $this->property = $property;
         }catch(Exception $err){
             throw $err;
@@ -37,7 +37,24 @@ class Request{
             CURLOPT_FOLLOWLOCATION => false,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS =>'{"test":"testtest","testtesttest":"testsetestestes"}',
+            CURLOPT_POSTFIELDS =>'{
+                "num":"'.$this->address->getNum().'",
+                "road":"'.$this->address->getRoad().'",
+                "pc":"'.$this->address->getPC().'",
+                "locality":"'.$this->address->getLocality().'",
+                "type":"'.$this->property->getType().'",
+                "rooms":"'.$this->property->getNbRooms().'",
+                "house_area":"'.$this->property->getHouseArea().'",
+                "garden_area":"'.$this->property->getGardenArea().'",
+                "terrace_area":"'.$this->property->getTerraceArea().'",
+                "open_fire":"'.$this->property->getOpenFire().'",
+                "land_surface":"'.$this->property->getLandSurface().'",
+                "number_facades":"'.$this->property->getNbFacades().'",
+                "swimming_pool":"'.$this->property->getSwimmingPool().'",
+                "state_of_building":"'.$this->property->getStateOfBuilding().'",
+                "construction_year":"'.$this->property->getConstructYear().'",
+                "fully_equiped_kitchen":"'.$this->property->getFullyEquipedKitchen().'"
+            }',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json'
             ),
@@ -50,7 +67,7 @@ class Request{
     }
 }
 
-class Adress{
+class Address{
     private
     $num,
     $road,
@@ -79,7 +96,19 @@ class Adress{
         }catch(Exception $err){
             throw $err;
         }
-    } 
+    }
+    public function getNum(){
+        return $this->num;
+    }
+    public function getRoad(){
+        return $this->road;
+    }
+    public function getPC(){
+        return $this->pc;
+    }
+    public function getLocality(){
+        return $this->locality;
+    }
 }
 
 class Property{
@@ -149,10 +178,47 @@ class Property{
                 $this->construct_year = intval($constructionYear);
                 $this->fully_equiped_kitchen = boolval($fullyEquipedKitchen);
 
-        }catch(Exception $err){
-            throw $err;
+            }catch(Exception $err){
+                throw $err;
+            }
         }
-    }
+
+        public function getType(){
+            return $this->type;
+        }
+        public function getNbRooms(){
+            return $this->number_of_rooms;
+        }
+        public function getHouseArea(){
+            return $this->house_area;
+        }
+        public function getGardenArea(){
+            return $this->garden_area;
+        }
+        public function getTerraceArea(){
+            return $this->terrace_area;
+        }
+        public function getOpenFire(){
+            return $this->open_fire;
+        }
+        public function getLandSurface(){
+            return $this->land_surface;
+        }
+        public function getNbFacades(){
+            return $this->number_of_facades;
+        }
+        public function getSwimmingPool(){
+            return $this->swimming_pool;
+        }
+        public function getStateOfBuilding(){
+            return $this->state_of_building;
+        }
+        public function getConstructYear(){
+            return $this->construct_year;
+        }
+        public function getFullyEquipedKitchen(){
+            return $this->fully_equiped_kitchen;
+        }
 }
 
 
@@ -164,13 +230,13 @@ try{
 }
 
 try{
-    $adress = new Adress(10,'rue de louvain',1420,'Trou perdu');
+    $address = new Address(10,'rue de louvain',1420,'Trou perdu');
 }catch(Exception $err){
     error_log($err, 0);
 }
 
 try{
-    $req = new Request($adress,$prop);
+    $req = new Request($address,$prop);
 }catch(Exception $err){
     error_log($err, 0);
 } */
