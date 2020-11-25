@@ -1,3 +1,7 @@
+<?php
+    namespace ImmoEliza;
+    require './assets/php/classes.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,58 +14,59 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
-        integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
-        crossorigin="anonymous"></script>
+    <script>
+        $("#form_estimate").submit(function(event) {
+                event.preventDefault();
+
+                var formData = new FormData($("#form_estimate"));
+
+                $.ajax({
+                    type: "POST",
+                    url: "./assets/php/form.php",
+                    data: formData
+                });
+            });
+    </script>
 </head>
 
 <body>
-    <div class="canvas">
-
-
-    </div>
-    <section class="container-fluid mt-5">
+<img src="assets/img/logo.svg" alt="Logo">
+    <section class="container-fluid" id="container">
         <div class="row">
-            <div class="col-md-4">
-                <form action="./form.php" method="post" class="form p-5">
+            <div class="col-md-5">
+                <form action="" method="post" class="form p-5" id="form_estimate">
                     <div class="form-row">
                         <div class="form-group col-md-8">
                             <label for="inputAddress">Address</label>
-                            <input type="text" class="form-control" id="inputAddress" placeholder="Rue Covid">
+                            <input type="text" class="form-control" id="inputAddress" name="inputAddress" placeholder="Rue Covid">
                         </div>
                         <div class="form-group  col-md-4">
                             <label for="inputAddress2">Number</label>
-                            <input type="number" class="form-control" id="inputAddress2" placeholder="19">
+                            <input type="number" class="form-control" id="inputAddress2" name="inputAddress2" placeholder="19">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="inputCity">Code postal</label>
-                            <input type="number" class="form-control" id="inputCity" placeholder="2020">
+                            <input type="number" class="form-control" id="inputCityPC" name="inputCityPC" placeholder="2020">
                         </div>
                         <div class="form-group col-md-8">
                             <label for="inputCity">City</label>
-                            <input type="text" class="form-control" id="inputCity" placeholder="Corona">
+                            <input type="text" class="form-control" id="inputCity" name="inputCity" placeholder="Corona">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="Type_of_property">Type de logement</label>
-                            <select id="Type_of_property" class="form-control">
-                                <option id="house" name="property" value="house" selected>Maison</option>
-                                <option id="appartement" name="property" value="appartement" checked="checked">
+                            <select id="Type_of_property" class="form-control" name="Type_of_property">
+                                <option id="house" value="house" selected>Maison</option>
+                                <option id="appartement" value="appartement" checked="checked">
                                     Appartement</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="State_of_building">State of building</label>
-                            <select id="State_of_building" class="form-control">
+                            <select id="State_of_building" name="State_of_building" class="form-control">
                                 <option selected value="to be done up"> To be done up </option>
                                 <option value="as new"> As new </option>
                                 <option value="good"> Good </option>
@@ -90,11 +95,11 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="House_area">Surface Habitable (m²)</label>
-                            <input type="number" class="form-control" id="House_area" placeholder="15 025">
+                            <input type="number" class="form-control" id="House_area" name="House_area" placeholder="15 025">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="surface">Surface du terrain (m²)</label>
-                            <input type="number" class="form-control" id="surface" placeholder="24 917" name="surface">
+                            <input type="number" class="form-control" id="surface" name="surface" placeholder="24 917" name="surface">
                         </div>
                     </div>
                     <div class="form-row">
@@ -225,9 +230,20 @@
                     <button type="submit" class="button" value="OK">Estimer</button>
                 </form>
             </div>
+            <canvas id="c" style="z-index: 0;" class="col-7">
+            
+            </canvas>
+            <?php
+                require './assets/php/form.php';
+            ?>
         </div>
+        
     </section>
 
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 
 </html>

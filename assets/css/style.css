@@ -56,3 +56,22 @@ body {
   color: #cacaca;
   font-size: 1rem;
 }
+
+canvas{
+  cursor:grab;
+  cursor:-webkit-grab;
+  cursor:-moz-grab;
+}
+canvas:active{
+  cursor:grabbing;
+  cursor:-webkit-grabbing;
+  cursor:-moz-grabbing;
+}
+#c {
+  background: url(../img/bg.jpg) no-repeat center center;
+  background-size: cover;
+}
+#priceEstimate{
+  font-size: 24px;
+  background-color: #c8553d;
+}
