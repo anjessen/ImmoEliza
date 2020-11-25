@@ -33,7 +33,7 @@
     <section class="container-fluid" id="container">
         <div class="row">
             <div class="col-md-5">
-                <form action="#" method="post" class="form p-5" id="form_estimate">
+                <form action="" method="post" class="form p-5" id="form_estimate">
                     <div class="form-row">
                         <div class="form-group col-md-8">
                             <label for="inputAddress">Address</label>

@@ -3,12 +3,12 @@
 //Classes
 
 class Request{
-    private $adress;
+    private $address;
     private $property;
 
     /**
      * Expected parameters
-     * @param Adress $address object build with class Address
+     * @param Address $address object build with class Address
      * @param Property $property object build with class Property
      */
     public function __construct(
