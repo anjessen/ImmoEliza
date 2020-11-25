@@ -9,39 +9,25 @@
             $address_city = $_POST['inputCity'];
             $type_of_property = $_POST['Type_of_property'];
             $number_of_rooms = $_POST['rooms'];
-            $garden = $_POST['garden'];
+            $garden = ($_POST['garden'] == 'yes')? true:false;
             $garden_area = $_POST['garden-area'];
-            $open_fire = $_POST['open-fire'];
+            $open_fire = ($_POST['open-fire'] == 'yes')? true:false;
             $house_area = $_POST['House_area'];
             $land_area = $_POST['surface'];
             $facades = $_POST['facades'];
-            $terrace = $_POST['terrace'];
+            $terrace = ($_POST['terrace'] == 'yes')? true : false;
             $terrace_area = $_POST['terrace-area'];
             $state_of_building = $_POST['State_of_building'];
             $construction_year = $_POST['construction_year'];
-            $swimming_pool = $_POST['swimming-pool'];
-            $equiped_kitchen = $_POST['equiped-kitchen'];
+            $swimming_pool = ($_POST['swimming-pool'] == 'yes')? true:false;
+            $equiped_kitchen = ($_POST['equiped-kitchen'] == 'yes')? true:false;
 
-            /* $data = array(
-                'adress_road' => $adress_road,
-                'adress_number' => $adress_number,
-                'adresse_city_pc' => $adress_city_pc,
-                'adress_city' => $adress_city,
-                'type_of_property' => $type_of_property,
-                'number_of_rooms' => $number_of_rooms,
-                'garden' => $garden,
-                'garden_area' => $garden_area,
-                'open_fire' => $open_fire,
-                'house_area' => $house_area,
-                'land_area' => $land_area,
-                'facades' => $facades,
-                'terrace' => $terrace,
-                'terrace-area' => $terrace_area,
-                'state-of-building' =>$state_of_building,
-                'construction_year' => $construction_year,
-                'swimming-pool' => $swimming_pool,
-                'equiped-kitchen' => $equiped_kitchen,
-            ); */
+            // ---> Sanitization here <---
+            forEach($_POST as $key => $value){
+                $value = filter_var($value, FILTER_SANITIZE_STRING);
+                $value = filter_var($value, FILTER_SANITIZE_ADD_SLASHES);
+            }
+
             try{
                 $address = new Address($address_number,$address_road,$address_city_pc,$address_city);
                 $property = new Property($type_of_property,$number_of_rooms,$house_area,$garden_area,$terrace_area,$open_fire,$land_area,$facades,$swimming_pool,$state_of_building,$construction_year,$equiped_kitchen);
