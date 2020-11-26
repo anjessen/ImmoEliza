@@ -58,20 +58,12 @@ if(isset($_POST['inputAddress'],$_POST['inputAddress2'],$_POST['inputCityPC'],$_
         $equiped_kitchen
     );
     $req = new Request($adress,$property);
-
-    // test return
-    echo '<pre>';
-    print_r($adress);
-    echo'</pre><br><br>';
-
-    echo '<pre>';
-    print_r($property);
-    echo'</pre><br><br>';
-
-    echo '<pre>';
-    print_r($req);
-    echo'</pre><br><br>';
 }
-
-    //exit;
-    ?>
+    $curl = curl_init("https://api-immoeliza.herokuapp.com");
+    $data = curl_exec($curl);
+    if ($req === false)
+    {
+        var_dump(curl_error($curl));
+    }
+    curl_close($curl);
+?>
