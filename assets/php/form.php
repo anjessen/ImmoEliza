@@ -17,7 +17,7 @@
             $facades = ($_POST['facades'] == "1")? 0 : $_POST['facades'];
             $terrace = ($_POST['terrace'] == 'yes')? 1:0;
             $terrace_area = $_POST['terrace-area'];
-            $state_of_the_building = $_POST['State_of_building'];
+            $state_of_the_building = $_POST['State_of_the_building'];
             $construction_year = $_POST['construction_year'];
             $swimming_pool = ($_POST['swimming-pool'] == 'yes')? 1:0;
             $equiped_kitchen = ($_POST['equiped-kitchen'] == 'yes')? 1:0;
