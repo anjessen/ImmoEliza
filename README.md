@@ -8,10 +8,10 @@
 - Deployment : Heroku
 
 ## Groups
-[Maxime (AI)](https://github.com/MDropsy)
-[Antoine (web)](https://github.com/anjessen)
-[Manon (web)](https://github.com/ManonBracke)
-[Joann (web)](https://github.com/delahayjoann)
+- [Maxime (AI)](https://github.com/MDropsy)
+- [Antoine (web)](https://github.com/anjessen)
+- [Manon (web)](https://github.com/ManonBracke)
+- [Joann (web)](https://github.com/delahayjoann)
 
 
 ## Introduction
