@@ -40,7 +40,7 @@
                 <form action="" method="post" class="form p-5" id="form_estimate">
                     <div class="form-row">
                         <div class="Form-group offset-md-5 col-md-2">
-                        <img src="assets/img/logo.svg" alt="Logo" class="logo">
+                        <img src="./assets/img/Logo.svg" alt="Logo" class="logo">
                         </div>
                     </div>
                     <div class="form-row">
