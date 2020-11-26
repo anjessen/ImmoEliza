@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-group  col-md-4">
                             <label for="inputAddress2">Number</label>
-                            <input type="number" class="form-control" id="inputAddress2" name="inputAddress2" placeholder="19">
+                            <input type="number" min="0" class="form-control" id="inputAddress2" name="inputAddress2" placeholder="19">
                         </div>
                     </div>
                     <div class="form-row">
@@ -75,30 +75,30 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label for="Construction_year">Année de construction</label>
-                            <input type="numbers" class="form-control" id="construction_year" name="construction_year"
+                            <input type="number" min="0" class="form-control" id="construction_year" name="construction_year"
                                 placeholder="1930">
                         </div>
 
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="rooms">Nombre de pièce</label>
-                            <input type="number" class="form-control" id="rooms" placeholder="159" name="rooms">
+                            <label for="rooms">Nombre de chambres</label>
+                            <input type="number" min="0" class="form-control" id="rooms" placeholder="159" name="rooms">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="facades">Number_of_facades</label>
-                            <input type="number" class="form-control" id="facades" name="facades" placeholder="2">
+                            <label for="facades">Nombre de façades</label>
+                            <input type="number" min="0" class="form-control" id="facades" name="facades" placeholder="2">
                         </div>
 
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="House_area">Surface Habitable (m²)</label>
-                            <input type="number" class="form-control" id="House_area" name="House_area" placeholder="15 025">
+                            <input type="number" min="0" class="form-control" id="House_area" name="House_area" placeholder="15 025">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="surface">Surface du terrain (m²)</label>
-                            <input type="number" class="form-control" id="surface" name="surface" placeholder="24 917" name="surface">
+                            <input type="number" min="0" class="form-control" id="surface" name="surface" placeholder="24 917" name="surface">
                         </div>
                     </div>
                     <div class="form-row">
@@ -148,12 +148,12 @@
                     <div class="form-row">
                         <div class="form-group col-md-6 display">
                             <label for="garden-area">Surface du jardin (m²)</label>
-                            <input type="number" class="form-control" id="garden-area" placeholder="23 920"
+                            <input type="number" min="0" class="form-control" id="garden-area" placeholder="23 920"
                                 name="garden-area">
                         </div>
                         <div class="form-group col-md-6 display">
                             <label for="terrace-area">Surface du terrasse (m²)</label>
-                            <input type="number" class="form-control" id="terrace-area" placeholder="24 917"
+                            <input type="number" min="0" class="form-control" id="terrace-area" placeholder="24 917"
                                 name="terrace-area">
                         </div>
                     </div>

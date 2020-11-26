@@ -14,7 +14,7 @@
             $open_fire = ($_POST['open-fire'] == 'yes')? 1:0;
             $house_area = $_POST['House_area'];
             $land_area = $_POST['surface'];
-            $facades = $_POST['facades'];
+            $facades = ($_POST['facades'] == "1")? 0 : $_POST['facades'];
             $terrace = ($_POST['terrace'] == 'yes')? 1:0;
             $terrace_area = $_POST['terrace-area'];
             $state_of_building = $_POST['State_of_building'];
