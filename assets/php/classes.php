@@ -62,26 +62,6 @@ class Request{
             ),
         ));
 
-        echo '<pre>{
-            "num":'.$this->address->getNum().',
-            "road":"'.$this->address->getRoad().'",
-            "pc":'.$this->address->getPC().',
-            "locality":"'.$this->address->getLocality().'",
-            "type_of_property":"'.$this->property->getType().'",
-            "number_of_rooms":'.$this->property->getNbRooms().',
-            "house_area":'.$this->property->getHouseArea().',
-            "garden":'.$this->property->getGarden().',
-            "garden_area":'.$this->property->getGardenArea().',
-            "terrace":'.$this->property->getTerrace().',
-            "terrace_area":'.$this->property->getTerraceArea().',
-            "open_fire":'.$this->property->getOpenFire().',
-            "surface_of_the_land":'.$this->property->getLandSurface().',
-            "number_of_facades":'.$this->property->getNbFacades().',
-            "swimming_pool":'.$this->property->getSwimmingPool().',
-            "state_of_building":"'.$this->property->getStateOfBuilding().'",
-            "construction_year":'.$this->property->getConstructYear().',
-            "fully_equiped_kitchen":'.$this->property->getFullyEquipedKitchen().'
-            }</pre>';
         $response = curl_exec($curl);
 
         curl_close($curl);
