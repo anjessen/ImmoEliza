@@ -155,12 +155,12 @@
                         </fieldset>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6 display_garden">
+                        <div class="form-group col-md-6 display">
                             <label for="garden-area">Surface du jardin (m²)</label>
                             <input type="number" min="0" class="form-control" id="garden-area" placeholder="23 920"
                                 name="garden-area">
                         </div>
-                        <div class="form-group col-md-6 display_terrasse">
+                        <div class="form-group col-md-6 display">
                             <label for="terrace-area">Surface du terrasse (m²)</label>
                             <input type="number" min="0" class="form-control" id="terrace-area" placeholder="24 917"
                                 name="terrace-area">
