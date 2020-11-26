@@ -154,12 +154,12 @@
                         </fieldset>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6 display">
+                        <div class="form-group col-md-6 display_garden">
                             <label for="garden-area">Surface du jardin (m²)</label>
                             <input type="number" min="0" class="form-control" id="garden-area" placeholder="23 920"
                                 name="garden-area">
                         </div>
-                        <div class="form-group col-md-6 display">
+                        <div class="form-group col-md-6 display_terrasse">
                             <label for="terrace-area">Surface du terrasse (m²)</label>
                             <input type="number" min="0" class="form-control" id="terrace-area" placeholder="24 917"
                                 name="terrace-area">
@@ -251,6 +251,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="./js/index.js"></script>
 </body>
 
 </html>
