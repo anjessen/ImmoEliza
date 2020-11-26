@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.form {
+  background-color: #588B8B;
+  border-radius: 5%;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  color: #FFFFFF;
+}
+
+.form button {
+  background: #c8553d;
+  color: white;
+  border: #c8553d;
+  border-radius: 10%;
+  padding: 0.5rem;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.form .button {
+  background: #f28f3b;
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+.form .button:hover {
+  background: #c8553d;
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+.form .display {
+  display: none;
+}
+
+.form ::-webkit-input-placeholder {
+  color: #cacaca;
+  font-size: 1rem;
+}
+
+.form :-ms-input-placeholder {
+  color: #cacaca;
+  font-size: 1rem;
+}
+
+.form ::-ms-input-placeholder {
+  color: #cacaca;
+  font-size: 1rem;
+}
+
+.form ::placeholder {
+  color: #cacaca;
+  font-size: 1rem;
+}
+
+canvas{
+  cursor:grab;
+  cursor:-webkit-grab;
+  cursor:-moz-grab;
+}
+canvas:active{
+  cursor:grabbing;
+  cursor:-webkit-grabbing;
+  cursor:-moz-grabbing;
+}
+#c {
+  background: url(../img/bg.jpg) no-repeat center center;
+  background-size: cover;
+}
+#priceEstimate{
+  font-size: 24px;
+  background-color: #c8553d;
+}
