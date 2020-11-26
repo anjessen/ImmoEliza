@@ -131,7 +131,7 @@ class Property{
     $land_surface,
     $number_of_facades,
     $swimming_pool,
-    $state_of_building,
+    $state_of_the_building,
     $construct_year,
     $fully_equiped_kitchen;
 
@@ -184,7 +184,7 @@ class Property{
                 $this->land_surface = floatval($landSurface);
                 $this->number_of_facades = intval($numberOfFacades);
                 $this->swimming_pool = $swimmingPool;
-                $this->state_of_building = $this->type_of_state_of_building[array_search($stateOfBuilding,$this->type_of_state_of_building)];
+                $this->state_of_the_building = $this->type_of_state_of_building[array_search($stateOfBuilding,$this->type_of_state_of_building)];
                 $this->construct_year = intval($constructionYear);
                 $this->fully_equiped_kitchen = $fullyEquipedKitchen;
 
@@ -227,7 +227,7 @@ class Property{
             return $this->swimming_pool;
         }
         public function getStateOfBuilding(){
-            return $this->state_of_building;
+            return $this->state_of_the_building;
         }
         public function getConstructYear(){
             return $this->construct_year;
