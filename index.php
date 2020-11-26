@@ -30,11 +30,18 @@
 </head>
 
 <body>
-<img src="assets/img/logo.svg" alt="Logo">
+
     <section class="container-fluid" id="container">
+    
         <div class="row">
             <div class="col-md-5">
+            
                 <form action="" method="post" class="form p-5" id="form_estimate">
+                    <div class="form-row">
+                        <div class="Form-group offset-md-5 col-md-2">
+                        <img src="assets/img/logo.svg" alt="Logo" class="logo">
+                        </div>
+                    </div>
                     <div class="form-row">
                         <div class="form-group col-md-8">
                             <label for="inputAddress">Address</label>
