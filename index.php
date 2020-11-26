@@ -67,9 +67,9 @@
                         <div class="form-group col-md-4">
                             <label for="Type_of_property">Type de logement</label>
                             <select id="Type_of_property" class="form-control" name="Type_of_property">
-                                <option id="house" value="house" selected>Maison</option>
-                                <option id="appartement" value="appartement" checked="checked">
-                                    Appartement</option>
+                                <option id="house" value="house" selected>House</option>
+                                <option id="appartement" value="appartment" checked="checked">
+                                    Appartment</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">

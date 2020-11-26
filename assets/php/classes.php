@@ -116,7 +116,7 @@ class Address{
 class Property{
     private
     // enum
-    $type_of_property = ["House","Appartement"],
+    $type_of_property = ["House","Appartment"],
     $type_of_state_of_building = ["to be done up" , "as new" , "good" , "to restore" , "just renovated"],
 
     // data
@@ -138,7 +138,7 @@ class Property{
 
     /**
      * Expected parameters
-     * @param string $type is string: "House" or "Appartement"
+     * @param string $type is string: "House" or "Appartment"
      * @param mixed $numberOfRooms is numerical in string/int format
      * @param mixed $houseArea is a float in string/int/float format
      * @param mixed $garden (OPTIONAL) is a bool 1/0
