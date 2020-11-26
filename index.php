@@ -73,8 +73,8 @@
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="State_of_building">State of building</label>
-                            <select id="State_of_building" name="State_of_building" class="form-control">
+                            <label for="State_of_the_building">State of building</label>
+                            <select id="State_of_the_building" name="State_of_the_building" class="form-control">
                                 <option selected value="to be done up"> To be done up </option>
                                 <option value="as new"> As new </option>
                                 <option value="good"> Good </option>
@@ -155,12 +155,12 @@
                         </fieldset>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6 display">
+                        <div class="form-group col-md-6 display_garden">
                             <label for="garden-area">Surface du jardin (m²)</label>
                             <input type="number" min="0" class="form-control" id="garden-area" placeholder="23 920"
                                 name="garden-area">
                         </div>
-                        <div class="form-group col-md-6 display">
+                        <div class="form-group col-md-6 display_terrasse">
                             <label for="terrace-area">Surface du terrasse (m²)</label>
                             <input type="number" min="0" class="form-control" id="terrace-area" placeholder="24 917"
                                 name="terrace-area">
@@ -236,6 +236,7 @@
                     </div>
 
                     <button type="submit" class="button" value="OK">Estimer</button>
+                    <p class="erreur"></p>
                 </form>
             </div>
             <canvas id="c" style="z-index: 0;" class="col-7">
@@ -250,6 +251,7 @@
     <script src="./assets/js/index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="./js/index.js"></script>
 </body>
 
 </html>
