@@ -19,7 +19,7 @@ const number_of_rooms = document.getElementById("Number_of_rooms");
 const house_area = document.getElementById("house-area");
 const inputCityPC = document.getElementById("inputCityPC")
 
-document.getElementById('type_of_the_property').addEventListener('click', function(){
+document.getElementById('Type_of_property').addEventListener('click', function(){
     if (type_of_property == NULL || number_of_rooms == NULL || house_area == NULL || inputCityPC == NULL)
     {
         document.body.innerHTML = `<p class="error">Vous n'avez pas remplie tous les champs!</p>`
