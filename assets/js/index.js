@@ -22,6 +22,6 @@ const inputCityPC = document.getElementsByClassId("inputCityPC")
 document.getElementById('type_of_property').addEventListener('click', function(){
     if (type_of_property == NULL || number_of_rooms == NULL || house_area == NULL || inputCityPC == NULL)
     {
-        document.body.innerHTML = `<p class="error">Vous n'avez pas remplie tous les champs!</p>`
+        document.body.innerHTML = `<p class="error">Vous n'avez pas remplie tous les champs!</p>`;
     }
 })
