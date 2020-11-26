@@ -73,8 +73,8 @@
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="State_of_building">State of building</label>
-                            <select id="State_of_building" name="State_of_building" class="form-control">
+                            <label for="State_of_the_building">State of building</label>
+                            <select id="State_of_the_building" name="State_of_the_building" class="form-control">
                                 <option selected value="to be done up"> To be done up </option>
                                 <option value="as new"> As new </option>
                                 <option value="good"> Good </option>
