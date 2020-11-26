@@ -236,6 +236,7 @@
                     </div>
 
                     <button type="submit" class="button" value="OK">Estimer</button>
+                    <p class="erreur"></p>
                 </form>
             </div>
             <canvas id="c" style="z-index: 0;" class="col-7">

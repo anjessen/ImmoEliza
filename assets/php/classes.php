@@ -53,7 +53,7 @@ class Request{
                 "surface_of_the_land":'.$this->property->getLandSurface().',
                 "number_of_facades":'.$this->property->getNbFacades().',
                 "swimming_pool":'.$this->property->getSwimmingPool().',
-                "state_of_building":"'.$this->property->getStateOfBuilding().'",
+                "state_of_the_building":"'.$this->property->getStateOfBuilding().'",
                 "construction_year":'.$this->property->getConstructYear().',
                 "fully_equiped_kitchen":'.$this->property->getFullyEquipedKitchen().'
                 }',

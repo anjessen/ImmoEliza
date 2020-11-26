@@ -17,7 +17,7 @@
             $facades = ($_POST['facades'] == "1")? 0 : $_POST['facades'];
             $terrace = ($_POST['terrace'] == 'yes')? 1:0;
             $terrace_area = $_POST['terrace-area'];
-            $state_of_building = $_POST['State_of_building'];
+            $state_of_the_building = $_POST['State_of_building'];
             $construction_year = $_POST['construction_year'];
             $swimming_pool = ($_POST['swimming-pool'] == 'yes')? 1:0;
             $equiped_kitchen = ($_POST['equiped-kitchen'] == 'yes')? 1:0;
@@ -30,7 +30,7 @@
 
             try{
                 $address = new Address($address_number,$address_road,$address_city_pc,$address_city);
-                $property = new Property($type_of_property,$number_of_rooms,$house_area,$garden,$garden_area,$terrace,$terrace_area,$open_fire,$land_area,$facades,$swimming_pool,$state_of_building,$construction_year,$equiped_kitchen);
+                $property = new Property($type_of_property,$number_of_rooms,$house_area,$garden,$garden_area,$terrace,$terrace_area,$open_fire,$land_area,$facades,$swimming_pool,$state_of_the_building,$construction_year,$equiped_kitchen);
                 $req = new Request($address,$property);
             }catch(Exception $err){
                 echo 'Une erreur est survenue: '.$err;
