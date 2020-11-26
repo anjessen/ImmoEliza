@@ -202,7 +202,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" id="swimming-pool_no"
                                             name="swimming-pool" value="no" checked="checked">
-                                        <label class="form-check-label" for="swimming-pool_yes">
+                                        <label class="form-check-label" for="swimming-pool_no">
                                             Non
                                         </label>
                                     </div>
