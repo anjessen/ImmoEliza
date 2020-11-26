@@ -38,23 +38,25 @@ class Request{
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS =>'{
-                "num":"'.$this->address->getNum().'",
+                "num":'.$this->address->getNum().',
                 "road":"'.$this->address->getRoad().'",
-                "pc":"'.$this->address->getPC().'",
+                "pc":'.$this->address->getPC().',
                 "locality":"'.$this->address->getLocality().'",
-                "type":"'.$this->property->getType().'",
-                "rooms":"'.$this->property->getNbRooms().'",
-                "house_area":"'.$this->property->getHouseArea().'",
-                "garden_area":"'.$this->property->getGardenArea().'",
-                "terrace_area":"'.$this->property->getTerraceArea().'",
-                "open_fire":"'.$this->property->getOpenFire().'",
-                "land_surface":"'.$this->property->getLandSurface().'",
-                "number_facades":"'.$this->property->getNbFacades().'",
-                "swimming_pool":"'.$this->property->getSwimmingPool().'",
+                "type_of_property":"'.$this->property->getType().'",
+                "number_of_rooms":'.$this->property->getNbRooms().',
+                "house_area":'.$this->property->getHouseArea().',
+                "garden":'.$this->property->getGarden().',
+                "garden_area":'.$this->property->getGardenArea().',
+                "terrace":'.$this->property->getTerrace().',
+                "terrace_area":'.$this->property->getTerraceArea().',
+                "open_fire":'.$this->property->getOpenFire().',
+                "surface_of_the_land":'.$this->property->getLandSurface().',
+                "number_of_facades":'.$this->property->getNbFacades().',
+                "swimming_pool":'.$this->property->getSwimmingPool().',
                 "state_of_building":"'.$this->property->getStateOfBuilding().'",
-                "construction_year":"'.$this->property->getConstructYear().'",
-                "fully_equiped_kitchen":"'.$this->property->getFullyEquipedKitchen().'"
-            }',
+                "construction_year":'.$this->property->getConstructYear().',
+                "fully_equiped_kitchen":'.$this->property->getFullyEquipedKitchen().'
+                }',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json'
             ),
@@ -121,7 +123,9 @@ class Property{
     $type,
     $number_of_rooms,
     $house_area,
+    $garden,
     $garden_area,
+    $terrace,
     $terrace_area,
     $open_fire,
     $land_surface,
@@ -137,21 +141,25 @@ class Property{
      * @param string $type is string: "House" or "Appartement"
      * @param mixed $numberOfRooms is numerical in string/int format
      * @param mixed $houseArea is a float in string/int/float format
+     * @param mixed $garden (OPTIONAL) is a bool 1/0
      * @param mixed $gardenArea (OPTIONAL) is a float in string/int/float format
+     * @param mixed $terrace (OPTIONAL) is a bool in 1/0 format
      * @param mixed $terraceArea (OPTIONAL) is a float in string/int/float format
-     * @param mixed $openFire (OPTIONAL) is a bool in string/int/bool format
+     * @param mixed $openFire (OPTIONAL) is a bool in 1/0 format
      * @param mixed $landSurface (OPTIONAL) is a float in string/int/float format
      * @param mixed $numberOfFacades (OPTIONAL) is a int in string/int format
-     * @param mixed $swimmingPool (OPTIONAL) is a bool in string/int/bool format
+     * @param mixed $swimmingPool (OPTIONAL) is a bool in 1/0 format
      * @param string $stateOfBuilding (OPTIONAL) is string: "to be done up" , "as new" , "good" , "to restore" , "just renovated"
      * @param mixed $constructionYear (OPTIONAL) is a int in string/int format
-     * @param mixed $fullyEquipedKitchen (OPTIONAL) is a bool in string/int/bool format
+     * @param mixed $fullyEquipedKitchen (OPTIONAL) is a bool 1/0 format
      */
     public function __construct(
         string $type,
         $numberOfRooms,
         $houseArea,
+        $garden = null,
         $gardenArea = null,
+        $terrace = null,
         $terraceArea = null,
         $openFire = null,
         $landSurface = null,
@@ -168,15 +176,17 @@ class Property{
                 $this->type = $this->type_of_property[array_search($type,$this->type_of_property)];
                 $this->number_of_rooms = intval($numberOfRooms);
                 $this->house_area = floatval($houseArea);
+                $this->garden = $garden;
                 $this->garden_area = floatval($gardenArea);
+                $this->terrace = $terrace;
                 $this->terrace_area = floatval($terraceArea);
-                $this->open_fire = boolval($openFire);
+                $this->open_fire = $openFire;
                 $this->land_surface = floatval($landSurface);
                 $this->number_of_facades = intval($numberOfFacades);
-                $this->swimming_pool = boolval($swimmingPool);
+                $this->swimming_pool = $swimmingPool;
                 $this->state_of_building = $this->type_of_state_of_building[array_search($stateOfBuilding,$this->type_of_state_of_building)];
                 $this->construct_year = intval($constructionYear);
-                $this->fully_equiped_kitchen = boolval($fullyEquipedKitchen);
+                $this->fully_equiped_kitchen = $fullyEquipedKitchen;
 
             }catch(Exception $err){
                 throw $err;
@@ -192,8 +202,14 @@ class Property{
         public function getHouseArea(){
             return $this->house_area;
         }
+        public function getGarden(){
+            return $this->garden;
+        }
         public function getGardenArea(){
             return $this->garden_area;
+        }
+        public function getTerrace(){
+            return $this->terrace;
         }
         public function getTerraceArea(){
             return $this->terrace_area;

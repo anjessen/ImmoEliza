@@ -9,18 +9,18 @@
             $address_city = $_POST['inputCity'];
             $type_of_property = $_POST['Type_of_property'];
             $number_of_rooms = $_POST['rooms'];
-            $garden = ($_POST['garden'] == 'yes')? true:false;
+            $garden = ($_POST['garden'] == 'yes')? 1:0;
             $garden_area = $_POST['garden-area'];
-            $open_fire = ($_POST['open-fire'] == 'yes')? true:false;
+            $open_fire = ($_POST['open-fire'] == 'yes')? 1:0;
             $house_area = $_POST['House_area'];
             $land_area = $_POST['surface'];
-            $facades = $_POST['facades'];
-            $terrace = ($_POST['terrace'] == 'yes')? true : false;
+            $facades = ($_POST['facades'] == "1")? 0 : $_POST['facades'];
+            $terrace = ($_POST['terrace'] == 'yes')? 1:0;
             $terrace_area = $_POST['terrace-area'];
             $state_of_building = $_POST['State_of_building'];
             $construction_year = $_POST['construction_year'];
-            $swimming_pool = ($_POST['swimming-pool'] == 'yes')? true:false;
-            $equiped_kitchen = ($_POST['equiped-kitchen'] == 'yes')? true:false;
+            $swimming_pool = ($_POST['swimming-pool'] == 'yes')? 1:0;
+            $equiped_kitchen = ($_POST['equiped-kitchen'] == 'yes')? 1:0;
 
             // ---> Sanitization here <---
             forEach($_POST as $key => $value){
@@ -30,7 +30,7 @@
 
             try{
                 $address = new Address($address_number,$address_road,$address_city_pc,$address_city);
-                $property = new Property($type_of_property,$number_of_rooms,$house_area,$garden_area,$terrace_area,$open_fire,$land_area,$facades,$swimming_pool,$state_of_building,$construction_year,$equiped_kitchen);
+                $property = new Property($type_of_property,$number_of_rooms,$house_area,$garden,$garden_area,$terrace,$terrace_area,$open_fire,$land_area,$facades,$swimming_pool,$state_of_building,$construction_year,$equiped_kitchen);
                 $req = new Request($address,$property);
             }catch(Exception $err){
                 echo 'Une erreur est survenue: '.$err;

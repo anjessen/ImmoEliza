@@ -3,12 +3,18 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+.logo {
+  height: 6rem;
+}
+
 .form {
-  background-color: #588B8B;
-  border-radius: 5%;
+  background: rgba(168, 168, 168, 0.74);
+  border-radius: 50px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
           box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  color: #FFFFFF;
+  color: #588B8B;
+  font-weight: 600;
+  margin-top: 2rem;
 }
 
 .form button {
@@ -55,23 +61,4 @@ body {
 .form ::placeholder {
   color: #cacaca;
   font-size: 1rem;
-}
-
-canvas{
-  cursor:grab;
-  cursor:-webkit-grab;
-  cursor:-moz-grab;
-}
-canvas:active{
-  cursor:grabbing;
-  cursor:-webkit-grabbing;
-  cursor:-moz-grabbing;
-}
-#c {
-  background: url(../img/bg.jpg) no-repeat center center;
-  background-size: cover;
-}
-#priceEstimate{
-  font-size: 24px;
-  background-color: #c8553d;
 }

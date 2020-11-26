@@ -8,22 +8,20 @@
 - Deployment : Heroku
 
 ## Groups
-- Group 1 : Valentin, Henrique, Nathanaël, Adam 
-- Group 2 : Florence, Philippe, Frédéric, Noah
-- Group 3 : Thomas, Julien, Pauline, Jean-Christophe
-- Group 4 : Yvan, Abderrahman, Kultigin, Morgane
-- Group 5 : Olivia, Dorian, Gaetano, Joffrey
-- __Group 6 : Joann, Manon, Antoine, Maxime__
-- Group 7 : Yannick, Jonathan, Mathieu, Vincent
+- [Maxime (AI)](https://github.com/MDropsy)
+- [Antoine (web)](https://github.com/anjessen)
+- [Manon (web)](https://github.com/ManonBracke)
+- [Joann (web)](https://github.com/delahayjoann)
+
 
 ## Introduction
 
-This project is a collaboration between the AI and the web dev promotions. The objective of this one is to give you the opportunity to improve your learning of PHP (web dev) || making an API (AI) by solving a real life need: create an app for the real estate agency named ImmoEliza. 
+This project is a collaboration between the AI and the web dev promotions of BeCode. The objective of this one is to give you the opportunity to improve your learning of PHP (web dev) || making an API (AI) by solving a real life need: create an app for the real estate agency named ImmoEliza. 
 
 Whereas HTML is good to create the visual interface of the form, you will need a backend script to actually process the data and compose the result via an API to be sent to the client.
 
 ## The Mission
-The AI developers will create an API for the needed of this application.The web developers will develop an interface for the client "ImmoElize". The main process is about a collaboration between the AI and the web dev, you all have to sync both in order to know how to construct the form. The result of the request must return a house in 3D view.
+The AI developers will create an API for the needed of this application.The web developers will develop an interface for the client "ImmoEliza". The main process is about a collaboration between the AI and the web dev, you all have to sync both in order to know how to construct the form. The result of the request must return a house in 3D view.
 
 ### The project must have at least:
 - A clear & simply UX Design
