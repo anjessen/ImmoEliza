@@ -38,7 +38,7 @@
             
 
             $tmp = $req->getPrediction();
-            echo '<p class="col-12 text-center" id="priceEstimate">Estimate price is '.$tmp['price_of_the_estate'].'€</p>';
+            echo '<p class="col-12 text-center" id="priceEstimate" style="background-color: red; font-size: 24px;">Estimate price is '.$tmp['price_of_the_estate'].'€</p>';
 
             if(true /* temporaire */){echo '<script type="module" src="./assets/js/objLoad.js"></script>';}
         } 
