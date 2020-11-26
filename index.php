@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script>
         $("#form_estimate").submit(function(event) {
                 event.preventDefault();
@@ -115,16 +116,16 @@
                                 <legend class="col-form-label col-md-4 pt-0">Jardin ?</legend>
                                 <div class="col-md-8">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="garden" name="garden"
+                                        <input class="form-check-input" type="radio" id="garden_yes" name="garden"
                                             value="yes">
-                                        <label class="form-check-label" for="yes">
+                                        <label class="form-check-label" for="garden_yes">
                                             Oui
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="garden" name="garden"
+                                        <input class="form-check-input" type="radio" id="garden_no" name="garden"
                                             value="no" checked="checked">
-                                        <label class="form-check-label" for="no">
+                                        <label class="form-check-label" for="garden_no">
                                             Non
                                         </label>
                                     </div>
@@ -136,16 +137,16 @@
                                 <legend class="col-form-label col-md-4 pt-0">Terrasse ?</legend>
                                 <div class="col-md-8">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="terrace" name="terrace"
+                                        <input class="form-check-input" type="radio" id="terrace_yes" name="terrace"
                                             value="yes">
-                                        <label class="form-check-label" for="yes">
+                                        <label class="form-check-label" for="terrace_yes">
                                             Oui
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="terrace" name="terrace"
+                                        <input class="form-check-input" type="radio" id="terrace_no" name="terrace"
                                             value="no" checked="checked">
-                                        <label class="form-check-label" for="no">
+                                        <label class="form-check-label" for="terrace_no">
                                             Non
                                         </label>
                                     </div>
@@ -171,16 +172,16 @@
                                 <legend class="col-form-label col-md-4 pt-0">Open fire ?</legend>
                                 <div class="col-md-8">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="open-fire" name="open-fire"
+                                        <input class="form-check-input" type="radio" id="open-fire_yes" name="open-fire"
                                             value="yes">
-                                        <label class="form-check-label" for="yes">
+                                        <label class="form-check-label" for="open-fire_yes">
                                             Oui
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="open-fire" name="open-fire"
+                                        <input class="form-check-input" type="radio" id="open-fire_no" name="open-fire"
                                             value="no" checked="checked">
-                                        <label class="form-check-label" for="no">
+                                        <label class="form-check-label" for="open-fire_no">
                                             Non
                                         </label>
                                     </div>
@@ -192,16 +193,16 @@
                                 <legend class="col-form-label col-md-4 pt-0">Piscine ?</legend>
                                 <div class="col-md-8">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="swimming-pool"
+                                        <input class="form-check-input" type="radio" id="swimming-pool_yes"
                                             name="swimming-pool" value="yes">
-                                        <label class="form-check-label" for="yes">
+                                        <label class="form-check-label" for="swimming-pool_yes">
                                             Oui
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="swimming-pool"
+                                        <input class="form-check-input" type="radio" id="swimming-pool_no"
                                             name="swimming-pool" value="no" checked="checked">
-                                        <label class="form-check-label" for="no">
+                                        <label class="form-check-label" for="swimming-pool_yes">
                                             Non
                                         </label>
                                     </div>
@@ -216,16 +217,16 @@
                                 <legend class="col-form-label col-md-4 pt-0">Cuisine equipé ?</legend>
                                 <div class="col-md-8">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="equiped-kitchen" value="yes"
+                                        <input class="form-check-input" type="radio" name="equiped-kitchen_yes" value="yes"
                                             id="equiped-kitchen">
-                                        <label class="form-check-label" for="yes">
+                                        <label class="form-check-label" for="equiped-kitchen_yes">
                                             Oui
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="equiped-kitchen" value="no"
+                                        <input class="form-check-input" type="radio" name="equiped-kitchen_no" value="no"
                                             checked="checked" id="equiped-kitchen">
-                                        <label class="form-check-label" for="no">
+                                        <label class="form-check-label" for="equiped-kitchen_no">
                                             Non
                                         </label>
                                     </div>
@@ -246,9 +247,7 @@
         </div>
         
     </section>
-
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="./assets/js/index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="./js/index.js"></script>

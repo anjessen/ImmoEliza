@@ -1,22 +1,13 @@
-const gardenArea = document.getElementById("display_garden");
-const terasseArea = document.getElementById("display_terasse");
 
-if (document.getElementById("display_garden").checked == true)
-{
-    document.getElementById("display_garden").style.display == "inline";
-}
-else
-{
-    document.getElementById("display_garden").style.display == "none";
-}
-
-if (document.getElementById("display_terrasse").checked == true)
-{
-    document.getElementById("display_terrasse").style.display == "inline";
-}
-else
-{
-    document.getElementById("display_terrasse").style.display == "none";
-}
-
-
+document.getElementById('garden_yes').addEventListener('click', function(){
+    document.getElementsByClassName("display")[0].style.display = 'inline';
+})
+document.getElementById('garden_no').addEventListener('click', function(){
+   document.getElementsByClassName("display")[0].style.display = 'none';
+})
+document.getElementById('terrace_yes').addEventListener('click', function(){
+    document.getElementsByClassName("display")[1].style.display = 'inline';
+})
+document.getElementById('terrace_no').addEventListener('click', function(){
+    document.getElementsByClassName("display")[1].style.display = 'none';
+})

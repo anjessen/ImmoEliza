@@ -20,30 +20,6 @@ import {OBJLoader2} from 'https://threejsfundamentals.org/threejs/resources/thre
 
         const scene = new THREE.Scene();
 
-        
-        //scene.background = new THREE.Color('black');
-
-    /*     {
-            const planeSize = 40;
-
-            const loader = new THREE.TextureLoader();
-            const texture = loader.load('https://threejsfundamentals.org/threejs/resources/images/checker.png');
-            texture.wrapS = THREE.RepeatWrapping;
-            texture.wrapT = THREE.RepeatWrapping;
-            texture.magFilter = THREE.NearestFilter;
-            const repeats = planeSize / 2;
-            texture.repeat.set(repeats, repeats);
-
-            const planeGeo = new THREE.PlaneBufferGeometry(planeSize, planeSize);
-            const planeMat = new THREE.MeshPhongMaterial({
-            map: texture,
-            side: THREE.DoubleSide,
-            });
-            const mesh = new THREE.Mesh(planeGeo, planeMat);
-            mesh.rotation.x = Math.PI * -.5;
-            scene.add(mesh);
-        } */
-
         {
             const skyColor = 0xB1E1FF;
             const groundColor = 0xB97A20;
