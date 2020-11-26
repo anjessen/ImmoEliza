@@ -217,16 +217,16 @@
                                 <legend class="col-form-label col-md-4 pt-0">Cuisine equipé ?</legend>
                                 <div class="col-md-8">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="equiped-kitchen" value="yes"
-                                            id="equiped-kitchen_yes">
-                                        <label class="form-check-label" for="equiped-kitchen_yes">
+                                        <input class="form-check-input" type="radio" name="equipped-kitchen" value="yes"
+                                            id="equipped-kitchen_yes">
+                                        <label class="form-check-label" for="equipped-kitchen_yes">
                                             Oui
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="equiped-kitchen" value="no"
-                                            checked="checked" id="equiped-kitchen_no">
-                                        <label class="form-check-label" for="equiped-kitchen_no">
+                                        <input class="form-check-input" type="radio" name="equipped-kitchen" value="no"
+                                            checked="checked" id="equipped-kitchen_no">
+                                        <label class="form-check-label" for="equipped-kitchen_no">
                                             Non
                                         </label>
                                     </div>

@@ -20,7 +20,7 @@
             $state_of_the_building = $_POST['State_of_the_building'];
             $construction_year = $_POST['construction_year'];
             $swimming_pool = ($_POST['swimming-pool'] == 'yes')? 1:0;
-            $equiped_kitchen = ($_POST['equiped-kitchen'] == 'yes')? 1:0;
+            $equipped_kitchen = ($_POST['equipped-kitchen'] == 'yes')? 1:0;
 
             // ---> Sanitization here <---
             forEach($_POST as $key => $value){
@@ -30,7 +30,7 @@
 
             try{
                 $address = new Address($address_number,$address_road,$address_city_pc,$address_city);
-                $property = new Property($type_of_property,$number_of_rooms,$house_area,$garden,$garden_area,$terrace,$terrace_area,$open_fire,$land_area,$facades,$swimming_pool,$state_of_the_building,$construction_year,$equiped_kitchen);
+                $property = new Property($type_of_property,$number_of_rooms,$house_area,$garden,$garden_area,$terrace,$terrace_area,$open_fire,$land_area,$facades,$swimming_pool,$state_of_the_building,$construction_year,$equipped_kitchen);
                 $req = new Request($address,$property);
             }catch(Exception $err){
                 echo 'Une erreur est survenue: '.$err;

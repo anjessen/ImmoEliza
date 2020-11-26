@@ -55,7 +55,7 @@ class Request{
                 "swimming_pool":'.$this->property->getSwimmingPool().',
                 "state_of_the_building":"'.$this->property->getStateOfBuilding().'",
                 "construction_year":'.$this->property->getConstructYear().',
-                "fully_equiped_kitchen":'.$this->property->getFullyEquipedKitchen().'
+                "fully_equipped_kitchen":'.$this->property->getFullyEquippedKitchen().'
                 }',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json'
@@ -133,7 +133,7 @@ class Property{
     $swimming_pool,
     $state_of_the_building,
     $construct_year,
-    $fully_equiped_kitchen;
+    $fully_equipped_kitchen;
 
 
     /**
@@ -151,7 +151,7 @@ class Property{
      * @param mixed $swimmingPool (OPTIONAL) is a bool in 1/0 format
      * @param string $stateOfBuilding (OPTIONAL) is string: "to be done up" , "as new" , "good" , "to restore" , "just renovated"
      * @param mixed $constructionYear (OPTIONAL) is a int in string/int format
-     * @param mixed $fullyEquipedKitchen (OPTIONAL) is a bool 1/0 format
+     * @param mixed $fullyEquippedKitchen (OPTIONAL) is a bool 1/0 format
      */
     public function __construct(
         string $type,
@@ -167,7 +167,7 @@ class Property{
         $swimmingPool = null,
         ?string $stateOfBuilding = null,
         $constructionYear = null,
-        $fullyEquipedKitchen = null
+        $fullyEquippedKitchen = null
         ){
             try{
                 $type = trim(ucfirst(strtolower($type)));
@@ -186,7 +186,7 @@ class Property{
                 $this->swimming_pool = $swimmingPool;
                 $this->state_of_the_building = $this->type_of_state_of_building[array_search($stateOfBuilding,$this->type_of_state_of_building)];
                 $this->construct_year = intval($constructionYear);
-                $this->fully_equiped_kitchen = $fullyEquipedKitchen;
+                $this->fully_equipped_kitchen = $fullyEquippedKitchen;
 
             }catch(Exception $err){
                 throw $err;
@@ -232,8 +232,8 @@ class Property{
         public function getConstructYear(){
             return $this->construct_year;
         }
-        public function getFullyEquipedKitchen(){
-            return $this->fully_equiped_kitchen;
+        public function getFullyEquippedKitchen(){
+            return $this->fully_equipped_kitchen;
         }
 }
 
