@@ -52,3 +52,6 @@ Thanks to this project, you can learn the following :
 - [The honeypot technique](https://www.thryv.com/blog/honeypot-technique/)
 
 ![Price way to high](https://i.pinimg.com/originals/db/78/a4/db78a425f4da253fbc70d383d72db60f.gif)
+
+## Run app
+ -php -S localhost:8000
